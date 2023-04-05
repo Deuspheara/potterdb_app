@@ -3,7 +3,7 @@ name: Build and Test on ci-implementation branch
 on:
   push:
     branches:
-      - ci-implementation
+      - feature/*
 
 jobs:
   build-and-test:
