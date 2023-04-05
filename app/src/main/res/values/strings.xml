@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">PotterDBApp</string>
+    <string name="title_home">Home</string>
+    <string name="title_characters">Characters</string>
+    <string name="title_spells">Spells</string>
+    <string name="title_houses">Houses</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_books">Books</string>
+    <string name="title_movies">Movies</string>
 </resources>
