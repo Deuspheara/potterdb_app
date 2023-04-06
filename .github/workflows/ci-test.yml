@@ -19,10 +19,12 @@ jobs:
           distribution: 'temurin'
 
       - name: Decrypt the keystore file
-        run: gpg -d --quiet --batch --passphrase  ${{ secrets.GPG_PASSWORD }} --output keystore.p12 ${{ secrets.GPG_KEY_FILE }}
+        run: |
+          echo "${{ secrets.GPG_KEY_FILE }}" | base64 --decode | gpg --quiet --batch --no-tty --passphrase "${{ secrets.GPG_PASSWORD }}" --output keystore.p12 --decrypt --armor
 
       - name: Decrypt the keystore.properties file
-        run: gpg -d --quiet --batch --passphrase ${{ secrets.GPG_PASSWORD }} --output keystore.properties ${{ secrets.GPG_KEYSTORE_PROPERTIES_FILE }}
+        run: |
+          echo "${{ secrets.GPG_KEYSTORE_PROPERTIES_FILE }}" | base64 --decode | gpg --quiet --batch --no-tty --passphrase "${{ secrets.GPG_PASSWORD }}" --output keystore.properties --decrypt
 
       - name: Build with Gradle
         run: ./gradlew assembleRelease -P keystore.properties
