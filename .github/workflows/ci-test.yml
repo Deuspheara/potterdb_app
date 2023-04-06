@@ -18,8 +18,18 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
+      - name: Decrypt the keystore file
+        uses: docker://opengg/gpg
+        with:
+          args: -d --quiet --batch --passphrase  ${{ secrets.GPG_PASSWORD }} --output keystore.p12 ${{ secrets.GPG_KEY_FILE }}
+
+      - name: Decrypt the keystore.properties file
+          uses: docker://opengg/gpg
+          with:
+            args: -d --quiet --batch --passphrase ${{ secrets.GPG_PASSWORD }} --output keystore.properties ${{ secrets.GPG_KEYSTORE_PROPERTIES_FILE }}
+
       - name: Build with Gradle
-        run: ./gradlew assembleRelease
+        run: ./gradlew assembleRelease -P keystore.properties
 
       - name: Test with Gradle
         run: ./gradlew test
