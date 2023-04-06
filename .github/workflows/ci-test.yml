@@ -37,7 +37,7 @@ jobs:
 
       - name: Install Firebase CLI
         run: curl -sL https://firebase.tools | bash
-        
+
       - name: Distribute to Firebase App Distribution
         run: |
           firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk \
