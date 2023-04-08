@@ -1,9 +1,9 @@
-name: Build and Test on ci-implementation branch
+name: Build/Test and Distribute to Firebase App Distribution
 
 on:
-  push:
+  commit:
     branches:
-      - feature/*
+      - develop
 
 jobs:
   build-and-test:
@@ -25,10 +25,6 @@ jobs:
       - name: Decrypt the keystore.properties file
         run: |
           echo "${{ secrets.GPG_KEYSTORE_PROPERTIES_FILE }}" | base64 --decode | gpg --quiet --batch --no-tty --passphrase "${{ secrets.GPG_PASSWORD }}" --output keystore.properties --decrypt
-
-      - name: Decrypt the google-services.json file
-        run: |
-          echo "${{ secrets.GPG_GOOGLE_SERVICES_JSON_FILE }}" | base64 --decode | gpg --quiet --batch --no-tty --passphrase "${{ secrets.GPG_PASSWORD }}" --output app/google-services.json --decrypt
 
       - name: Build with Gradle
         run: ./gradlew assembleRelease -P keystore.properties

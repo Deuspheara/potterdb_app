@@ -12,11 +12,9 @@ buildscript {
         nav_version = "2.5.3"
         paging_version = "3.1.1"
         coilVersion = "2.2.2"
-        googleServicesVersion = "4.3.15"
     }
     dependencies {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
-        classpath "com.google.gms:google-services:$googleServicesVersion"
     }
 }
 
