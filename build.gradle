@@ -6,9 +6,8 @@ buildscript {
 
         okHttpLibVersion = "4.9.3"
         retrofitLibVersion = "2.9.0"
-        hiltLibVersion = "2.42"
+        hiltLibVersion = "2.44"
         coroutinesVersion = "1.6.3"
-        glideVersion = '4.13.2'
         roomVersion = "2.5.0"
         nav_version = "2.5.3"
         paging_version = "3.1.1"
@@ -16,6 +15,7 @@ buildscript {
     }
     dependencies {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltLibVersion"
     }
 }
 
