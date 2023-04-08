@@ -19,8 +19,8 @@ jobs:
           distribution: 'temurin'
 
       - name: Decrypt the keystore.properties file
-          run: |
-            echo "${{ secrets.GPG_KEYSTORE_PROPERTIES_FILE }}" | base64 --decode | gpg --quiet --batch --no-tty --passphrase "${{ secrets.GPG_PASSWORD }}" --output keystore.properties --decrypt
+        run: |
+          echo "${{ secrets.GPG_KEYSTORE_PROPERTIES_FILE }}" | base64 --decode | gpg --quiet --batch --no-tty --passphrase "${{ secrets.GPG_PASSWORD }}" --output keystore.properties --decrypt
 
 
       - name: Test with Gradle
