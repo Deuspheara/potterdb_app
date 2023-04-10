@@ -1,34 +1,34 @@
-package fr.deuspheara.potterdbapp.data.model
+package fr.deuspheara.potterdbapp.data.network.model
 
 import com.squareup.moshi.Json
 
 data class PotterCharacter(
     @Json(name = "slug")
-    val slug: String,
+    val slug: String?,
     @Json(name = "name")
-    val name: String,
+    val name: String?,
     @Json(name = "born")
-    val born: String,
+    val born: String?,
     @Json(name = "died")
-    val died: String,
+    val died: String?,
     @Json(name = "gender")
-    val gender: String,
+    val gender: String?,
     @Json(name = "species")
-    val species: String,
+    val species: String?,
     @Json(name = "height")
-    val height: String,
+    val height: String?,
     @Json(name = "weight")
-    val weight: String,
+    val weight: String?,
     @Json(name = "hair_color")
-    val hairColor: String,
+    val hairColor: String?,
     @Json(name = "eye_color")
-    val eyeColor: String,
+    val eyeColor: String?,
     @Json(name = "skin_color")
-    val skinColor: String,
+    val skinColor: String?,
     @Json(name = "blood_status")
-    val bloodStatus: String,
+    val bloodStatus: String?,
     @Json(name = "nationality")
-    val nationality: String,
+    val nationality: String?,
     @Json(name = "animagus")
     val animagus: String?,
     @Json(name = "boggart")
@@ -38,19 +38,19 @@ data class PotterCharacter(
     @Json(name = "patronus")
     val patronus: String?,
     @Json(name = "alias_names")
-    val aliasNames: List<String>,
+    val aliasNames: List<String>?,
     @Json(name = "family_member")
-    val familyMembers: List<String>,
+    val familyMembers: List<String>?,
     @Json(name = "jobs")
-    val jobs: List<String>,
+    val jobs: List<String>?,
     @Json(name = "romances")
-    val romances: List<String>,
+    val romances: List<String>?,
     @Json(name = "titles")
-    val titles: List<String>,
+    val titles: List<String>?,
     @Json(name = "wands")
-    val wands: List<String>,
+    val wands: List<String>?,
     @Json(name = "image")
-    val image: String,
+    val image: String?,
     @Json(name = "wiki")
-    val wiki: String
+    val wiki: String?
 )

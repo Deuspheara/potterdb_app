@@ -30,10 +30,11 @@ android {
 
     defaultConfig {
         applicationId "fr.deuspheara.potterdbapp"
-        minSdk 24
-        targetSdk 33
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        buildConfigField "String", "BASE_URL", "\"https://api.potterdb.com/v1/\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

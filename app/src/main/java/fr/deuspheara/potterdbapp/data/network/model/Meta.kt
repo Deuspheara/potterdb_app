@@ -1,4 +1,4 @@
-package fr.deuspheara.potterdbapp.data.model
+package fr.deuspheara.potterdbapp.data.network.model
 
 import com.squareup.moshi.Json
 
