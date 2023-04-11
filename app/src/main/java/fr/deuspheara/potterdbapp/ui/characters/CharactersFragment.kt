@@ -19,4 +19,5 @@ class CharactersFragment : Fragment() {
         return binding.root
     }
 
+
 }

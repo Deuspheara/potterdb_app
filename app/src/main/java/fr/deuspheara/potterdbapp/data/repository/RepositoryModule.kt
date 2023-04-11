@@ -6,8 +6,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import fr.deuspheara.potterdbapp.core.coroutine.DispatcherModule
 import fr.deuspheara.potterdbapp.data.datasource.CharacterRemoteDataSource
-import fr.deuspheara.potterdbapp.data.repository.CharacterRepository
-import fr.deuspheara.potterdbapp.data.repository.CharacterRepositoryImpl
 import kotlinx.coroutines.CoroutineDispatcher
 
 
