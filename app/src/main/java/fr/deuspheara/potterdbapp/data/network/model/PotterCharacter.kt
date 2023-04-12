@@ -1,56 +1,56 @@
 package fr.deuspheara.potterdbapp.data.network.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class PotterCharacter(
-    @Json(name = "slug")
+    @SerializedName("slug")
     val slug: String?,
-    @Json(name = "name")
+    @SerializedName("name")
     val name: String?,
-    @Json(name = "born")
+    @SerializedName("born")
     val born: String?,
-    @Json(name = "died")
+    @SerializedName("died")
     val died: String?,
-    @Json(name = "gender")
+    @SerializedName("gender")
     val gender: String?,
-    @Json(name = "species")
+    @SerializedName("species")
     val species: String?,
-    @Json(name = "height")
+    @SerializedName("height")
     val height: String?,
-    @Json(name = "weight")
+    @SerializedName("weight")
     val weight: String?,
-    @Json(name = "hair_color")
+    @SerializedName("hair_color")
     val hairColor: String?,
-    @Json(name = "eye_color")
+    @SerializedName("eye_color")
     val eyeColor: String?,
-    @Json(name = "skin_color")
+    @SerializedName("skin_color")
     val skinColor: String?,
-    @Json(name = "blood_status")
+    @SerializedName("blood_status")
     val bloodStatus: String?,
-    @Json(name = "nationality")
+    @SerializedName("nationality")
     val nationality: String?,
-    @Json(name = "animagus")
+    @SerializedName("animagus")
     val animagus: String?,
-    @Json(name = "boggart")
+    @SerializedName("boggart")
     val boggart: String?,
-    @Json(name = "house")
+    @SerializedName("house")
     val house: String?,
-    @Json(name = "patronus")
+    @SerializedName("patronus")
     val patronus: String?,
-    @Json(name = "alias_names")
+    @SerializedName("alias_names")
     val aliasNames: List<String>?,
-    @Json(name = "family_member")
+    @SerializedName("family_member")
     val familyMembers: List<String>?,
-    @Json(name = "jobs")
+    @SerializedName("jobs")
     val jobs: List<String>?,
-    @Json(name = "romances")
+    @SerializedName("romances")
     val romances: List<String>?,
-    @Json(name = "titles")
+    @SerializedName("titles")
     val titles: List<String>?,
-    @Json(name = "wands")
+    @SerializedName("wands")
     val wands: List<String>?,
-    @Json(name = "image")
+    @SerializedName("image")
     val image: String?,
-    @Json(name = "wiki")
+    @SerializedName("wiki")
     val wiki: String?
 )

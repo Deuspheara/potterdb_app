@@ -1,14 +1,14 @@
 package fr.deuspheara.potterdbapp.data.network.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class PotterLinks(
-    @Json(name = "self")
+    @SerializedName("self")
     val self: String,
-    @Json(name = "current")
+    @SerializedName("current")
     val current: String,
-    @Json(name = "next")
+    @SerializedName("next")
     val next: String?,
-    @Json(name = "last")
+    @SerializedName("last")
     val last: String
 )

@@ -1,12 +1,12 @@
 package fr.deuspheara.potterdbapp.data.network.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class PotterMeta(
-    @Json(name = "pagination")
+    @SerializedName("pagination")
     val pagination: PotterPagination,
-    @Json(name = "copyright")
+    @SerializedName("copyright")
     val copyright: String,
-    @Json(name = "generated_at")
+    @SerializedName("generated_at")
     val generatedAt: String
 )

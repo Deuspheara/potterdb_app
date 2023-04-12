@@ -1,15 +1,16 @@
 package fr.deuspheara.potterdbapp.data.network.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
+
 
 data class PotterPagination(
-    @Json(name = "current")
+    @SerializedName("current")
     val current: Int,
-    @Json(name = "next")
+    @SerializedName("next")
     val next: Int?,
-    @Json(name = "last")
+    @SerializedName("last")
     val last: Int,
-    @Json(name = "records")
+    @SerializedName("records")
     val records: Int
 )
 
