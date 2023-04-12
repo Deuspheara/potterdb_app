@@ -2,13 +2,13 @@ package fr.deuspheara.potterdbapp.domain.character
 
 import android.util.Log
 import androidx.paging.PagingData
-import androidx.paging.PagingSource
 import fr.deuspheara.potterdbapp.data.network.model.PotterCharacter
+import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 import fr.deuspheara.potterdbapp.data.repository.CharacterRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetFilteredCharacterPaginated @Inject constructor(
+class GetFilteredCharacterPaginatedUseCase @Inject constructor(
     private val characterRepository: CharacterRepository
 ) {
 
@@ -18,12 +18,16 @@ class GetFilteredCharacterPaginated @Inject constructor(
     suspend operator fun invoke(
         sort: String?,
         name: String?,
-    ): Flow<PagingData<PotterCharacter>> {
-        return try {
-            characterRepository.getFilteredCharacterPaginated(sort, name)
-        } catch (e: Exception) {
-            Log.e(TAG, "Error while fetching filtered characters", e)
-            throw e
-        }
+    ): Flow<PagingData<CharacterType>> {
+           return try {
+                Log.d(TAG, "Get filtered characters paginated with $sort and $name")
+               characterRepository.getFilteredCharacterPaginated(sort, name)
+
+
+           } catch (e: Exception) {
+               Log.e(TAG, "Error while fetching filtered characters", e)
+               throw e
+           }
+
     }
 }

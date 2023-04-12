@@ -1,6 +1,6 @@
 package fr.deuspheara.potterdbapp.data.datasource
 
-import com.squareup.moshi.Moshi
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,12 +17,12 @@ object DataSourceModule {
     fun provideCharacterRemoteDataSource(
         @DispatcherModule.DispatcherIO ioDispatcher: CoroutineDispatcher,
         characterApi: CharacterApi,
-        moshi: Moshi
+        gson : Gson
     ): CharacterRemoteDataSource {
         return CharacterRemoteDataSourceImpl(
             ioDispatcher = ioDispatcher,
             characterApi = characterApi,
-            moshi = moshi
+            gson = gson
 
         )
     }

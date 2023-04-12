@@ -2,11 +2,12 @@ package fr.deuspheara.potterdbapp.data.datasource
 
 import android.util.Log
 import androidx.paging.PagingSource
-import com.squareup.moshi.Moshi
+import com.google.gson.Gson
 import fr.deuspheara.potterdbapp.core.coroutine.DispatcherModule
 import fr.deuspheara.potterdbapp.data.network.api.CharacterApi
 import fr.deuspheara.potterdbapp.data.network.model.PotterCharacter
-import fr.deuspheara.potterdbapp.data.network.model.PotterResponse
+import fr.deuspheara.potterdbapp.data.network.model.CharacterResponse
+import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 import fr.deuspheara.potterdbapp.data.paging.ApiPagingCharacter
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -17,13 +18,13 @@ interface CharacterRemoteDataSource {
     fun createCharacterPagingSource(
         sort: String?,
         name: String?,
-    ): PagingSource<Int, PotterCharacter>
+    ): PagingSource<Int, CharacterType>
 }
 
 class CharacterRemoteDataSourceImpl @Inject constructor(
     @DispatcherModule.DispatcherIO private val ioDispatcher: CoroutineDispatcher,
     private val characterApi: CharacterApi,
-    private val moshi: Moshi
+    private val gson: Gson
 ) : CharacterRemoteDataSource {
 
     private companion object {
@@ -35,8 +36,8 @@ class CharacterRemoteDataSourceImpl @Inject constructor(
             try {
                 val response = characterApi.getCharacter(id)
                 if (response.isSuccessful) {
-                    val potterResponse = response.body() as PotterResponse<PotterCharacter>
-                    potterResponse.data.attributes[0]
+                    val characterResponse = response.body() as CharacterResponse
+                    characterResponse.data.first().attributes
                 } else {
                     throw Exception("Error while fetching character")
                 }
@@ -50,11 +51,11 @@ class CharacterRemoteDataSourceImpl @Inject constructor(
     override fun createCharacterPagingSource(
         sort: String?,
         name: String?,
-    ): PagingSource<Int, PotterCharacter> {
+    ): PagingSource<Int, CharacterType> {
         return ApiPagingCharacter(
             apiCall = characterApi::getCharacters,
             dispatcher = ioDispatcher,
-            moshi = moshi,
+            gson = gson,
             sort = sort,
             name = name
         )

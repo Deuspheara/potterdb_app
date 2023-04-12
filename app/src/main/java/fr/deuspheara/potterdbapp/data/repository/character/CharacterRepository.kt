@@ -4,10 +4,10 @@ import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.PagingSource
 import fr.deuspheara.potterdbapp.core.coroutine.DispatcherModule
 import fr.deuspheara.potterdbapp.data.datasource.CharacterRemoteDataSource
 import fr.deuspheara.potterdbapp.data.network.model.PotterCharacter
+import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -18,7 +18,7 @@ interface CharacterRepository {
     suspend fun getFilteredCharacterPaginated(
         sort: String?,
         name: String?
-    ): Flow<PagingData<PotterCharacter>>
+    ): Flow<PagingData<CharacterType>>
 }
 
 class CharacterRepositoryImpl @Inject constructor(
@@ -55,7 +55,7 @@ class CharacterRepositoryImpl @Inject constructor(
     override suspend fun getFilteredCharacterPaginated(
         sort: String?,
         name: String?
-    ): Flow<PagingData<PotterCharacter>> {
+    ): Flow<PagingData<CharacterType>> {
         return withContext(ioDispatcher) {
             try {
                 Pager(
