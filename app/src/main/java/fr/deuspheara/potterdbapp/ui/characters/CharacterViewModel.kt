@@ -2,12 +2,14 @@ package fr.deuspheara.potterdbapp.ui.characters
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.deuspheara.potterdbapp.data.network.model.PotterCharacter
 import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 import fr.deuspheara.potterdbapp.domain.character.GetFilteredCharacterPaginatedUseCase
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -21,6 +23,14 @@ data class CharacterDetailsState(
 class CharacterViewModel @Inject constructor(
     private val getFilteredCharacterPaginatedUseCase: GetFilteredCharacterPaginatedUseCase
 ): ViewModel(){
+
+    init{
+        viewModelScope.launch {
+            fetchFilteredCharacterPaginated(null,null)
+        }
+    }
+
+
     private val _state = MutableStateFlow(
         CharacterDetailsState(
             isInProgress = true,
@@ -57,10 +67,9 @@ class CharacterViewModel @Inject constructor(
                     isInProgress = false,
                     currentError = null,
                     successModel = getFilteredCharacterPaginatedUseCase(
-                        sort, name
+                        sort,
+                        name
                     )
-
-
                 )
             } catch (e: Exception) {
                 CharacterDetailsState(

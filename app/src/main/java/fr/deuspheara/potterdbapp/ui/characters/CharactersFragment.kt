@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
@@ -44,6 +46,7 @@ class CharactersFragment : Fragment() {
             viewModel.state.collectLatest { state ->
                 state.currentError?.let {
                     Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+                    binding.characterProgressBar.isVisible = true
                 }
 
                 state.successModel.let {
@@ -54,6 +57,11 @@ class CharactersFragment : Fragment() {
                         }
                         pagingAdapter.submitData(pagingCharacterData)
                     }
+                    binding.characterProgressBar.isVisible = false
+                }
+                state.isInProgress.let {
+                    binding.characterProgressBar.isVisible = it
+
                 }
 
             }
@@ -62,11 +70,28 @@ class CharactersFragment : Fragment() {
         }
 
 
-        binding.tempButton.setOnClickListener{
-            viewLifecycleOwner.lifecycle.coroutineScope.launch{
-                viewModel.fetchFilteredCharacterPaginated("name", null)
+//        binding.tempButton.setOnClickListener{
+//            viewLifecycleOwner.lifecycle.coroutineScope.launch{
+//                viewModel.fetchFilteredCharacterPaginated("name", null)
+//            }
+//        }
+
+        binding.searchViewCharacter.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewLifecycleOwner.lifecycle.coroutineScope.launch{
+                    viewModel.fetchFilteredCharacterPaginated("name", query)
+                }
+                return true
             }
-        }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+
+        binding.searchViewCharacter.setOnClickListener(View.OnClickListener {
+            binding.searchViewCharacter.isIconified = false
+        })
     }
 
 
