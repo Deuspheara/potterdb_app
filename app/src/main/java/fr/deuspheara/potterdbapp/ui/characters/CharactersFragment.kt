@@ -16,6 +16,7 @@ import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import fr.deuspheara.potterdbapp.databinding.FragmentCharactersBinding
+import fr.deuspheara.potterdbapp.utils.NetworkHelper
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -73,6 +74,7 @@ class CharactersFragment : Fragment() {
         binding.searchViewCharacter.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewLifecycleOwner.lifecycle.coroutineScope.launch{
+
                     viewModel.fetchFilteredCharacterPaginated("name", query)
                 }
                 return true

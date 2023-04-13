@@ -35,11 +35,11 @@ class CharacterRemoteDataSourceImplTest {
         assertEquals(expected,actual)
     }
 
-    @Test
-    fun createCharacterPagingSource() = runTest {
+//    @Test
+//    fun createCharacterPagingSource() = runTest {
 //        val expected = CharacterPagingSourceFake()
 //        val actual = dataSource.createCharacterPagingSource(null, null)
 //        assertEquals(expected, actual)
-    }
+//    }
 
 }

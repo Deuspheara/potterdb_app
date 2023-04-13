@@ -1,11 +1,13 @@
 package fr.deuspheara.potterdbapp.domain.character
 
 import androidx.paging.PagingData
+import androidx.paging.map
 
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import fr.deuspheara.potterdbapp.TestingModelProvider
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.test.runTest
@@ -32,10 +34,10 @@ class GetFilteredCharacterPaginatedUseCaseTest {
 
     @Test
     fun invoke() = runTest {
-//        val expected = PagingData.from(listOf(TestingModelProvider.provideCharacterTypeWithId("1")))
-//        val actual = getFilteredCharacterPaginatedUseCase("name", "Harry")
-//            .take(1)
-//            .single()
-//        assertEquals(expected, actual)
+        val expected = TestingModelProvider.provideCharacterTypeWithId("1")
+
+        val actual = getFilteredCharacterPaginatedUseCase("name", "Harry").take(1).first().map { actual ->
+            assertEquals(expected, actual)
+        }
     }
 }
