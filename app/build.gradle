@@ -36,7 +36,7 @@ android {
         versionName "1.0"
         buildConfigField "String", "BASE_URL", "\"https://api.potterdb.com/v1/\""
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "fr.deuspheara.potterdbapp.ApplicationRunner"
     }
 
     buildTypes {
@@ -58,7 +58,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += [
+                "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+        ]
     }
+    hilt { enableAggregatingTask = true }
 
 
 }
@@ -69,7 +73,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
@@ -101,4 +104,17 @@ dependencies {
     // Coroutine
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
 
+    //Junit
+    testImplementation 'junit:junit:4.13.2'
+
+    //Dagger test
+    testImplementation("com.google.dagger:hilt-android-testing:2.44")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.44")
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.44"
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver3:5.0.0-alpha.2'
+
+
+    //androidx test
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
 }
