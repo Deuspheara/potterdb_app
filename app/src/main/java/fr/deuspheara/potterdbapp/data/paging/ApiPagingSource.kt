@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.Response
 import javax.inject.Inject
 
-/*
+/**
 * This class is used to create a paging source
 *
 * @param apiCall: suspend (sort: String?, name: String?, pageNumber: Int?, pageSize: Int?) -> Response<PotterResponse<PotterCharacter>> - api call
@@ -37,7 +37,9 @@ class ApiPagingCharacter @Inject constructor(
     /**
      * This method is used to load the next page
      * @param params: LoadParams<Int> - load params
+     *
      * @return LoadResult<Int, PotterCharacter> - load result
+     *
      * @throws Exception
      */
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharacterType> {
@@ -65,7 +67,9 @@ class ApiPagingCharacter @Inject constructor(
 
     /**
      * This method is used to get the refresh key
+     *
      * @param state: PagingState<Int, PotterCharacter> - paging state
+     *
      * @return Int? - refresh key
      */
     override fun getRefreshKey(state: PagingState<Int, CharacterType>): Int? {

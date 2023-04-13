@@ -70,12 +70,6 @@ class CharactersFragment : Fragment() {
         }
 
 
-//        binding.tempButton.setOnClickListener{
-//            viewLifecycleOwner.lifecycle.coroutineScope.launch{
-//                viewModel.fetchFilteredCharacterPaginated("name", null)
-//            }
-//        }
-
         binding.searchViewCharacter.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewLifecycleOwner.lifecycle.coroutineScope.launch{

@@ -15,19 +15,17 @@ class GetFilteredCharacterPaginatedUseCase @Inject constructor(
     private companion object {
         private const val TAG = "GetFilteredCharacterPaginated"
     }
+
     suspend operator fun invoke(
         sort: String?,
         name: String?,
     ): Flow<PagingData<CharacterType>> {
-           return try {
-                Log.d(TAG, "Get filtered characters paginated with $sort and $name")
-               characterRepository.getFilteredCharacterPaginated(sort, name)
-
-
-           } catch (e: Exception) {
-               Log.e(TAG, "Error while fetching filtered characters", e)
-               throw e
-           }
-
+       return try {
+           Log.d(TAG, "Get filtered characters paginated with $sort and $name")
+           characterRepository.getFilteredCharacterPaginated(sort, name)
+       } catch (e: Exception) {
+           Log.e(TAG, "Error while fetching filtered characters", e)
+           throw e
+       }
     }
 }
