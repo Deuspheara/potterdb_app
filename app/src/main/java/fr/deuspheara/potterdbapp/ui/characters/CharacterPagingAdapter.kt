@@ -3,7 +3,6 @@ package fr.deuspheara.potterdbapp.ui.characters
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import fr.deuspheara.potterdbapp.data.network.model.PotterCharacter
 import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 
 class CharacterPagingAdapter : PagingDataAdapter<CharacterType, CharacterViewHolder>(COMPARATOR) {

@@ -1,25 +1,23 @@
 package fr.deuspheara.potterdbapp.domain.character
 
 import android.util.Log
-import fr.deuspheara.potterdbapp.data.network.model.PotterCharacter
+import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 import fr.deuspheara.potterdbapp.data.repository.CharacterRepository
-import fr.deuspheara.potterdbapp.utils.NetworkHelper
 import javax.inject.Inject
 
-class GetCharacterByIdUseCase @Inject constructor(
+class GetCharacterBySlugUseCase @Inject constructor(
     private val characterRepository: CharacterRepository,
-    private val networkHelper: NetworkHelper
 ) {
     private companion object {
-        private const val TAG = "GetCharacterByIdUseCase"
+        private const val TAG = "GetCharacterBySlugUseCase"
     }
 
     suspend operator fun invoke(
-        id : Int
-    ): PotterCharacter {
+        slug : String
+    ): CharacterType.PotterCharacter {
         return try {
-            Log.d(TAG, "Get character with id: $id")
-            characterRepository.getCharacter(id)
+            Log.d(TAG, "Get character with slug: $slug")
+            characterRepository.getCharacter(slug)
         } catch (e: Exception) {
             Log.e(TAG, "Error while fetching character", e)
             throw e

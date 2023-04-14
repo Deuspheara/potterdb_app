@@ -5,7 +5,6 @@ import androidx.paging.PagingSource
 import com.google.gson.Gson
 import fr.deuspheara.potterdbapp.core.coroutine.DispatcherModule
 import fr.deuspheara.potterdbapp.data.network.api.CharacterApi
-import fr.deuspheara.potterdbapp.data.network.model.PotterCharacter
 import fr.deuspheara.potterdbapp.data.network.model.CharacterResponse
 import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 import fr.deuspheara.potterdbapp.data.paging.ApiPagingCharacter
@@ -14,7 +13,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 interface CharacterRemoteDataSource {
-    suspend fun getCharacter(id: Int): PotterCharacter
+    suspend fun getCharacter(slug: String): CharacterType.PotterCharacter
     fun createCharacterPagingSource(
         sort: String?,
         name: String?,
@@ -31,13 +30,13 @@ class CharacterRemoteDataSourceImpl @Inject constructor(
         private const val TAG = "CharacterRemoteDataSource"
     }
 
-    override suspend fun getCharacter(id: Int): PotterCharacter {
+    override suspend fun getCharacter(slug: String): CharacterType.PotterCharacter {
         return withContext(ioDispatcher) {
             try {
-                val response = characterApi.getCharacter(id)
+                val response = characterApi.getCharacter(slug)
                 if (response.isSuccessful) {
-                    val characterResponse = response.body() as CharacterResponse
-                    characterResponse.data.first().attributes
+                    val characterResponse = response.body() as CharacterResponse<CharacterType>
+                    characterResponse.data.attributes
                 } else {
                     throw Exception("Error while fetching character")
                 }

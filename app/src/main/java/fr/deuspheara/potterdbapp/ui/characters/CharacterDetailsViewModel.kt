@@ -2,43 +2,37 @@ package fr.deuspheara.potterdbapp.ui.characters
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.deuspheara.potterdbapp.data.network.model.CharacterType
+import fr.deuspheara.potterdbapp.domain.character.GetCharacterBySlugUseCase
 import fr.deuspheara.potterdbapp.domain.character.GetFilteredCharacterPaginatedUseCase
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 
-data class CharacterState(
+
+data class CharacterDetailsState(
     val isInProgress: Boolean,
     val currentError: Exception?,
-    val successModel: Flow<PagingData<CharacterType>>?
+    val successModel: CharacterType.PotterCharacter?
 )
 
 @HiltViewModel
-class CharacterViewModel @Inject constructor(
-    private val getFilteredCharacterPaginatedUseCase: GetFilteredCharacterPaginatedUseCase
+class CharacterDetailsViewModel @Inject constructor(
+    private val getCharacterBySlugUseCase: GetCharacterBySlugUseCase
 ): ViewModel(){
 
-    init{
-        viewModelScope.launch {
-            fetchFilteredCharacterPaginated(null,null)
-        }
-    }
-
-
     private val _state = MutableStateFlow(
-        CharacterState(
+        CharacterDetailsState(
             isInProgress = true,
             currentError = null,
             successModel = null
         )
     )
 
-    val state: StateFlow<CharacterState>
+    val state: StateFlow<CharacterDetailsState>
         get() = _state.asStateFlow()
 
 
@@ -48,13 +42,12 @@ class CharacterViewModel @Inject constructor(
      * @param name the name to filter the characters
      * @return a flow of paginated characters
      */
-    suspend fun fetchFilteredCharacterPaginated(
-        sort: String?,
-        name: String?
+    suspend fun fetchCharacterBySlug(
+        slug : String
     ){
         Log.d("CharacterViewModel", "Fetch characters")
         _state.emit(
-            CharacterState(
+            CharacterDetailsState(
                 isInProgress = true,
                 currentError = null,
                 successModel = null
@@ -62,16 +55,15 @@ class CharacterViewModel @Inject constructor(
         )
         _state.emit(
             try {
-                CharacterState(
+                CharacterDetailsState(
                     isInProgress = false,
                     currentError = null,
-                    successModel = getFilteredCharacterPaginatedUseCase(
-                        sort,
-                        name
+                    successModel = getCharacterBySlugUseCase(
+                        slug = slug
                     )
                 )
             } catch (e: Exception) {
-                CharacterState(
+                CharacterDetailsState(
                     isInProgress = false,
                     currentError = e,
                     successModel = null

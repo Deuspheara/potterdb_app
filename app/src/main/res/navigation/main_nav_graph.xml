@@ -38,5 +38,9 @@
         android:id="@+id/characterDetailsFragment"
         android:name="fr.deuspheara.potterdbapp.ui.characters.CharacterDetailsFragment"
         android:label="fragment_character_details"
-        tools:layout="@layout/fragment_character_details" />
+        tools:layout="@layout/fragment_character_details" >
+        <action
+            android:id="@+id/action_characterDetailsFragment_to_charactersFragment"
+            app:destination="@id/charactersFragment" />
+    </fragment>
 </navigation>

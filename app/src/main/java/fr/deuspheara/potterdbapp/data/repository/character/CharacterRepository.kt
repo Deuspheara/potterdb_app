@@ -6,7 +6,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import fr.deuspheara.potterdbapp.core.coroutine.DispatcherModule
 import fr.deuspheara.potterdbapp.data.datasource.CharacterRemoteDataSource
-import fr.deuspheara.potterdbapp.data.network.model.PotterCharacter
 import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +13,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 interface CharacterRepository {
-    suspend fun getCharacter(id: Int): PotterCharacter
+    suspend fun getCharacter(slug: String): CharacterType.PotterCharacter
     suspend fun getFilteredCharacterPaginated(
         sort: String?,
         name: String?
@@ -35,12 +34,12 @@ class CharacterRepositoryImpl @Inject constructor(
      * @param id the id of the character
      * @return the character
      */
-    override suspend fun getCharacter(id: Int): PotterCharacter {
+    override suspend fun getCharacter(slug: String): CharacterType.PotterCharacter {
         return withContext(ioDispatcher) {
             try {
-                characterRemoteDataSource.getCharacter(id)
+                characterRemoteDataSource.getCharacter(slug)
             } catch (e: Exception) {
-                Log.e(TAG, "Error while fetching character with id $id", e)
+                Log.e(TAG, "Error while fetching character with id $slug", e)
                 throw e
             }
         }

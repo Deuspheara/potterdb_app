@@ -20,6 +20,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    /**
+     * Provides the OkHttpClient object.
+     *
+     * @return The [OkHttpClient] object
+     */
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
@@ -32,6 +37,11 @@ object NetworkModule {
         }.build()
     }
 
+    /**
+     * Provides the Gson object.
+     *
+     * @return The [Gson] object
+     */
     @Provides
     @Singleton
     fun provideGson(): Gson {
@@ -40,6 +50,14 @@ object NetworkModule {
         return gsonBuilder.create()
     }
 
+    /**
+     * Provides the Retrofit object.
+     *
+     * @param okHttpClient The [OkHttpClient] object used to instantiate the Retrofit object
+     * @param gson The [Gson] object used to instantiate the Retrofit object
+     *
+     * @return The [Retrofit] object
+     */
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit {
@@ -50,6 +68,13 @@ object NetworkModule {
             .build()
     }
 
+    /**
+     * Provides the CharacterApi service implementation.
+     *
+     * @param retrofit The [Retrofit] object used to instantiate the service
+     *
+     * @return The [CharacterApi] service implementation.
+     */
     @Provides
     fun providePotterApi(retrofit: Retrofit): CharacterApi {
         return retrofit.create(CharacterApi::class.java)

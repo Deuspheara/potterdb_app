@@ -46,7 +46,7 @@ class CharacterViewHolder private constructor(
 
             characterCard.setOnClickListener{
                 val bundle : Bundle = bundleOf(
-                    "character_id" to character.id
+                    "character_slug" to character.attributes.slug
                 )
                 val action = CharactersFragmentDirections.actionCharactersFragmentToCharacterDetailsFragment()
                itemView.findNavController().navigate(action.actionId, bundle)

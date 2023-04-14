@@ -10,7 +10,7 @@ object NetworkHelper {
     /**
      * Check if the device is connected to the internet
      *
-     * @param context
+     * @param context the context of the application
      *
      * @return true if the device is connected to the internet, false otherwise
      */
