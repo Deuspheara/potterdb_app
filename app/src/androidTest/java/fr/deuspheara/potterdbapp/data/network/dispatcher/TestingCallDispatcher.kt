@@ -34,13 +34,12 @@ class TestingCallDispatcher @Inject constructor() : Dispatcher() {
             ?.removeSuffix("?")
         ) {
             "characters" -> {
-                request.body.readUtf8()
                 MockResponse().apply {
-                    this.setResponseCode(HttpsURLConnection.HTTP_OK)
-                    this.setBody(Gson().toJson(TestingModelProvider.provideMultipleCharacterResponse()))
+                    setResponseCode(HttpsURLConnection.HTTP_OK)
+                    setBody(Gson().toJson(TestingModelProvider.provideMultipleCharacterResponse()))
                 }
             }
-            "characters/1" -> {
+            "characters/harry-potter" -> {
                 request.body.readUtf8()
                 MockResponse().apply {
                     this.setResponseCode(HttpsURLConnection.HTTP_OK)

@@ -1,21 +1,24 @@
 package fr.deuspheara.potterdbapp
 
 import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import fr.deuspheara.potterdbapp.data.network.model.*
+import fr.deuspheara.potterdbapp.data.paging.CharacterPagingSourceFake
+import kotlinx.coroutines.runBlocking
 
 object TestingModelProvider {
 
-    fun provideCharacterResponse(): CharacterResponse {
+    fun provideCharacterResponse(): CharacterResponse<CharacterType> {
         return CharacterResponse(
-            data = listOf(
-                provideCharacterType()
-            ),
+            data = provideCharacterType(),
+
             meta = providePotterMeta(),
-            links = PotterLinks(self = "", current = "",next= "", last = "")
+            links = CharacterResponse.PotterLinks(self = "", current = "", next = "", last = "")
         )
     }
 
-    fun provideMultipleCharacterResponse() : CharacterResponse{
+    fun provideMultipleCharacterResponse() : CharacterResponse<List<CharacterType>>{
         return CharacterResponse(
             data = listOf(
                 provideCharacterTypeWithId("1"),
@@ -25,7 +28,7 @@ object TestingModelProvider {
                 provideCharacterTypeWithId("5"),
             ),
             meta = providePotterMeta(),
-            links = PotterLinks(self = "", current = "",next= "", last = "")
+            links = CharacterResponse.PotterLinks(self = "", current = "", next = "", last = "")
         )
     }
 
@@ -44,8 +47,8 @@ object TestingModelProvider {
             attributes = providePotterCharacter()
         )
     }
-    fun providePotterCharacter(): PotterCharacter {
-        return PotterCharacter(
+    fun providePotterCharacter(): CharacterType.PotterCharacter {
+        return CharacterType.PotterCharacter(
             slug = null,
             name = "Harry",
             born = null,
@@ -74,8 +77,8 @@ object TestingModelProvider {
         )
     }
 
-    fun providePotterLinks(): PotterLinks {
-        return PotterLinks(
+    fun providePotterLinks(): CharacterResponse.PotterLinks {
+        return CharacterResponse.PotterLinks(
             self = "",
             current = "",
             next = null,
@@ -83,21 +86,27 @@ object TestingModelProvider {
         )
     }
 
-    fun providePotterMeta(): PotterMeta {
-        return PotterMeta(
-            pagination = PotterPagination(current = 0, next = 0, last = 0, records = 0),
+    fun providePotterMeta(): CharacterResponse.PotterMeta {
+        return CharacterResponse.PotterMeta(
+            pagination = CharacterResponse.PotterMeta.PotterPagination(
+                current = 0,
+                next = 0,
+                last = 0,
+                records = 0
+            ),
             copyright = "",
             generatedAt = ""
         )
     }
 
-    fun providePotterPagination(): PotterPagination {
-        return PotterPagination(
+    fun providePotterPagination(): CharacterResponse.PotterMeta.PotterPagination {
+        return CharacterResponse.PotterMeta.PotterPagination(
             current = 0,
             next = null,
             last = 0,
             records = 0
         )
     }
+
 
 }

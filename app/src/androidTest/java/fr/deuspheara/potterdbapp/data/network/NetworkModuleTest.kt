@@ -32,6 +32,13 @@ object NetworkModuleTest {
     }
 
     @Provides
+    fun provideOkHttpClient(
+        mockWebServer: MockWebServer
+    ): OkHttpClient {
+        return OkHttpClient.Builder().build()
+    }
+
+    @Provides
     fun provideGson(): Gson {
         return GsonBuilder().create()
     }

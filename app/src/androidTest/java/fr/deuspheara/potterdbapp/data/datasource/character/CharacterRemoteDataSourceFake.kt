@@ -7,7 +7,6 @@ import fr.deuspheara.potterdbapp.core.coroutine.DispatcherModule
 import fr.deuspheara.potterdbapp.data.datasource.CharacterRemoteDataSource
 import fr.deuspheara.potterdbapp.data.network.api.CharacterApi
 import fr.deuspheara.potterdbapp.data.network.model.CharacterType
-import fr.deuspheara.potterdbapp.data.network.model.PotterCharacter
 import fr.deuspheara.potterdbapp.data.paging.CharacterPagingSourceFake
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
@@ -16,7 +15,7 @@ import javax.inject.Inject
 class CharacterRemoteDataSourceFake @Inject constructor(
 ) : CharacterRemoteDataSource {
 
-    override suspend fun getCharacter(id: Int): PotterCharacter {
+    override suspend fun getCharacter(slug: String): CharacterType.PotterCharacter {
         return TestingModelProvider.providePotterCharacter()
     }
 

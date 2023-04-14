@@ -55,11 +55,21 @@ class CharacterDetailsFragment : Fragment() {
                             imageDetailCharacter.load(it.image){
                                 crossfade(true)
                                 placeholder(R.drawable.missing_character)
+
+                                error(R.drawable.missing_character)
                             }
-                            nameDetailCharacter.text = it.name
-                            characterGender.text = it.gender
-                            characterBirthDate.text = it.born
-                            characterSpecies.text = it.species
+                            nameDetailCharacter.text = it.name.isNullOrBlank().let { isNameEmpty ->
+                                if (isNameEmpty) "Unknown" else it.name
+                            }
+                            characterGender.text = it.gender.isNullOrBlank().let { isGenderEmpty ->
+                                if(isGenderEmpty) "Unknow" else it.gender
+                            }
+                            characterBirthDate.text = it.born.isNullOrBlank().let { isBornEmpty ->
+                                if (isBornEmpty) "Unknown" else it.born
+                            }
+                            characterSpecies.text = it.species.isNullOrBlank().let { isSpeciesEmpty ->
+                                if (isSpeciesEmpty) "Unknown" else it.species
+                            }
 
                             backButtonCharacter.setOnClickListener {
                                 val action = CharacterDetailsFragmentDirections.actionCharacterDetailsFragmentToCharactersFragment()
