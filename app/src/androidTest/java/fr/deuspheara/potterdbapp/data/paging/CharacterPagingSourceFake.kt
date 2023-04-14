@@ -14,8 +14,8 @@ class CharacterPagingSourceFake @Inject constructor(): PagingSource<Int, Charact
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharacterType> {
         return try {
             val page = params.key ?: 1
-            val characters = List(5) {
-                TestingModelProvider.provideCharacterType()
+            val characters = List(2) {
+                TestingModelProvider.provideCharacterTypeWithId("")
             }
             LoadResult.Page(
                 data = characters,

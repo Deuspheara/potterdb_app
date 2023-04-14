@@ -99,8 +99,8 @@ dependencies {
     implementation "io.coil-kt:coil:$coilVersion"
 
     //Pagination
-    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
-
+    implementation "androidx.paging:paging-runtime-ktx:3.2.0-alpha04"
+    implementation "androidx.paging:paging-testing:3.2.0-alpha04"
     // Coroutine
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
 
@@ -112,6 +112,7 @@ dependencies {
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.44")
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.44"
     androidTestImplementation 'com.squareup.okhttp3:mockwebserver3:5.0.0-alpha.2'
+
 
 
     //androidx test
