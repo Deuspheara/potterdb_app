@@ -15,13 +15,13 @@ import javax.inject.Inject
 /**
 * This class is used to create a paging source
 *
-* @param apiCall: suspend (sort: String?, name: String?, pageNumber: Int?, pageSize: Int?) -> Response<PotterResponse<PotterCharacter>> - api call
+* @param apiCall: suspend (sort: String?, name: String?, pageNumber: Int?, pageSize: Int?) -> Response<CharacterResponse<List<CharacterType>>> - api call
 * @param dispatcher: CoroutineDispatcher - dispatcher
 *
 * @return PagingSource<Int, PotterCharacter> - paging source
  */
 class ApiPagingCharacter @Inject constructor(
-    private val apiCall: suspend (sort: String?, name: String?, pageNumber: Int?, pageSize: Int?) -> Response<CharacterResponse>,
+    private val apiCall: suspend (sort: String?, name: String?, pageNumber: Int?, pageSize: Int?) -> Response<CharacterResponse<List<CharacterType>>>,
     @DispatcherModule.DispatcherIO private val dispatcher: CoroutineDispatcher,
     private val gson: Gson,
     private val sort: String?,
