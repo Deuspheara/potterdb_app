@@ -1,6 +1,7 @@
 package fr.deuspheara.potterdbapp.domain.character
 
 import android.util.Log
+import fr.deuspheara.potterdbapp.data.network.model.CharacterLightModel
 import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 import fr.deuspheara.potterdbapp.data.repository.CharacterRepository
 import javax.inject.Inject
@@ -14,7 +15,7 @@ class GetCharacterBySlugUseCase @Inject constructor(
 
     suspend operator fun invoke(
         slug : String
-    ): CharacterType.PotterCharacter {
+    ): CharacterLightModel {
         return try {
             Log.d(TAG, "Get character with slug: $slug")
             characterRepository.getCharacter(slug)
@@ -23,5 +24,4 @@ class GetCharacterBySlugUseCase @Inject constructor(
             throw e
         }
     }
-
 }

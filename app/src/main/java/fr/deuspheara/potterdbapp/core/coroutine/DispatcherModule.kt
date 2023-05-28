@@ -11,8 +11,6 @@ import javax.inject.Qualifier
 @Module
 @InstallIn(SingletonComponent::class)
 object DispatcherModule {
-
-
     @Qualifier
     @Retention(AnnotationRetention.RUNTIME)
     annotation class DispatcherDefault

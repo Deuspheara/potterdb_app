@@ -22,7 +22,12 @@
         tools:layout="@layout/fragment_characters" >
         <action
             android:id="@+id/action_charactersFragment_to_characterDetailsFragment"
-            app:destination="@id/characterDetailsFragment" />
+            app:destination="@id/characterDetailsFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
@@ -41,6 +46,12 @@
         tools:layout="@layout/fragment_character_details" >
         <action
             android:id="@+id/action_characterDetailsFragment_to_charactersFragment"
-            app:destination="@id/charactersFragment" />
+            app:destination="@id/charactersFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/from_right"
+            app:popUpTo="@id/characterDetailsFragment"
+            app:popUpToInclusive="false" />
     </fragment>
 </navigation>

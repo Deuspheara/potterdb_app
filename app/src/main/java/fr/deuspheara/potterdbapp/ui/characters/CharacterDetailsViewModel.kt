@@ -3,6 +3,7 @@ package fr.deuspheara.potterdbapp.ui.characters
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import fr.deuspheara.potterdbapp.data.network.model.CharacterLightModel
 import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 import fr.deuspheara.potterdbapp.domain.character.GetCharacterBySlugUseCase
 import fr.deuspheara.potterdbapp.domain.character.GetFilteredCharacterPaginatedUseCase
@@ -16,7 +17,7 @@ import javax.inject.Inject
 data class CharacterDetailsState(
     val isInProgress: Boolean,
     val currentError: Exception?,
-    val successModel: CharacterType.PotterCharacter?
+    val successModel: CharacterLightModel?
 )
 
 @HiltViewModel

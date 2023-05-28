@@ -45,7 +45,6 @@ class CharacterDetailsFragment : Fragment() {
             viewModel.state.collectLatest { state ->
                 state.currentError?.let {
                     Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
-
                 }
 
                 state.successModel.let {
@@ -62,7 +61,7 @@ class CharacterDetailsFragment : Fragment() {
                                 if (isNameEmpty) "Unknown" else it.name
                             }
                             characterGender.text = it.gender.isNullOrBlank().let { isGenderEmpty ->
-                                if(isGenderEmpty) "Unknow" else it.gender
+                                if(isGenderEmpty) "Unknown" else it.gender
                             }
                             characterBirthDate.text = it.born.isNullOrBlank().let { isBornEmpty ->
                                 if (isBornEmpty) "Unknown" else it.born

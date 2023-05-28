@@ -5,7 +5,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.google.gson.Gson
 import fr.deuspheara.potterdbapp.core.coroutine.DispatcherModule
-import fr.deuspheara.potterdbapp.data.network.model.CharacterResponse
+import fr.deuspheara.potterdbapp.data.network.model.PotterResponse
 import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -21,7 +21,7 @@ import javax.inject.Inject
 * @return PagingSource<Int, PotterCharacter> - paging source
  */
 class ApiPagingCharacter @Inject constructor(
-    private val apiCall: suspend (sort: String?, name: String?, pageNumber: Int?, pageSize: Int?) -> Response<CharacterResponse<List<CharacterType>>>,
+    private val apiCall: suspend (sort: String?, name: String?, pageNumber: Int?, pageSize: Int?) -> Response<PotterResponse<List<CharacterType>>>,
     @DispatcherModule.DispatcherIO private val dispatcher: CoroutineDispatcher,
     private val gson: Gson,
     private val sort: String?,

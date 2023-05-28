@@ -23,7 +23,6 @@ object DataSourceModule {
             ioDispatcher = ioDispatcher,
             characterApi = characterApi,
             gson = gson
-
         )
     }
 

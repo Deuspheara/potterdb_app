@@ -62,4 +62,5 @@ data class CharacterType(
         @SerializedName("wiki")
         val wiki: String?
     )
+
 }

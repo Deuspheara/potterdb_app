@@ -2,6 +2,7 @@ package fr.deuspheara.potterdbapp.domain.character
 
 import android.util.Log
 import androidx.paging.PagingData
+import fr.deuspheara.potterdbapp.data.network.model.CharacterLightModel
 import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 import fr.deuspheara.potterdbapp.data.repository.CharacterRepository
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +19,7 @@ class GetFilteredCharacterPaginatedUseCase @Inject constructor(
     suspend operator fun invoke(
         sort: String?,
         name: String?,
-    ): Flow<PagingData<CharacterType>> {
+    ): Flow<PagingData<CharacterLightModel>> {
        return try {
            Log.d(TAG, "Get filtered characters paginated with $sort and $name")
            characterRepository.getFilteredCharacterPaginated(sort, name)

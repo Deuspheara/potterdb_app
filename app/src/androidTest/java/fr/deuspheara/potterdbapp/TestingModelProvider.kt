@@ -1,25 +1,20 @@
 package fr.deuspheara.potterdbapp
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import fr.deuspheara.potterdbapp.data.network.model.*
-import fr.deuspheara.potterdbapp.data.paging.CharacterPagingSourceFake
-import kotlinx.coroutines.runBlocking
 
 object TestingModelProvider {
 
-    fun provideCharacterResponse(): CharacterResponse<CharacterType> {
-        return CharacterResponse(
+    fun provideCharacterResponse(): PotterResponse<CharacterType> {
+        return PotterResponse(
             data = provideCharacterType(),
 
             meta = providePotterMeta(),
-            links = CharacterResponse.PotterLinks(self = "", current = "", next = "", last = "")
+            links = PotterResponse.PotterLinks(self = "", current = "", next = "", last = "")
         )
     }
 
-    fun provideMultipleCharacterResponse() : CharacterResponse<List<CharacterType>>{
-        return CharacterResponse(
+    fun provideMultipleCharacterResponse() : PotterResponse<List<CharacterType>>{
+        return PotterResponse(
             data = listOf(
                 provideCharacterTypeWithId("1"),
                 provideCharacterTypeWithId("2"),
@@ -28,7 +23,7 @@ object TestingModelProvider {
                 provideCharacterTypeWithId("5"),
             ),
             meta = providePotterMeta(),
-            links = CharacterResponse.PotterLinks(self = "", current = "", next = "", last = "")
+            links = PotterResponse.PotterLinks(self = "", current = "", next = "", last = "")
         )
     }
 
@@ -77,8 +72,8 @@ object TestingModelProvider {
         )
     }
 
-    fun providePotterLinks(): CharacterResponse.PotterLinks {
-        return CharacterResponse.PotterLinks(
+    fun providePotterLinks(): PotterResponse.PotterLinks {
+        return PotterResponse.PotterLinks(
             self = "",
             current = "",
             next = null,
@@ -86,9 +81,9 @@ object TestingModelProvider {
         )
     }
 
-    fun providePotterMeta(): CharacterResponse.PotterMeta {
-        return CharacterResponse.PotterMeta(
-            pagination = CharacterResponse.PotterMeta.PotterPagination(
+    fun providePotterMeta(): PotterResponse.PotterMeta {
+        return PotterResponse.PotterMeta(
+            pagination = PotterResponse.PotterMeta.PotterPagination(
                 current = 0,
                 next = 0,
                 last = 0,
@@ -99,8 +94,8 @@ object TestingModelProvider {
         )
     }
 
-    fun providePotterPagination(): CharacterResponse.PotterMeta.PotterPagination {
-        return CharacterResponse.PotterMeta.PotterPagination(
+    fun providePotterPagination(): PotterResponse.PotterMeta.PotterPagination {
+        return PotterResponse.PotterMeta.PotterPagination(
             current = 0,
             next = null,
             last = 0,

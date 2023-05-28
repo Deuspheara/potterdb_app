@@ -6,6 +6,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import fr.deuspheara.potterdbapp.core.coroutine.DispatcherModule
 import fr.deuspheara.potterdbapp.data.datasource.CharacterRemoteDataSource
+import fr.deuspheara.potterdbapp.data.network.mapper.toCharacterLight
+import fr.deuspheara.potterdbapp.data.network.model.CharacterLightModel
 import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -13,11 +15,11 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 interface CharacterRepository {
-    suspend fun getCharacter(slug: String): CharacterType.PotterCharacter
+    suspend fun getCharacter(slug: String): CharacterLightModel
     suspend fun getFilteredCharacterPaginated(
         sort: String?,
         name: String?
-    ): Flow<PagingData<CharacterType>>
+    ): Flow<PagingData<CharacterLightModel>>
 }
 
 class CharacterRepositoryImpl @Inject constructor(
@@ -34,10 +36,11 @@ class CharacterRepositoryImpl @Inject constructor(
      * @param id the id of the character
      * @return the character
      */
-    override suspend fun getCharacter(slug: String): CharacterType.PotterCharacter {
+    override suspend fun getCharacter(slug: String): CharacterLightModel {
         return withContext(ioDispatcher) {
             try {
                 characterRemoteDataSource.getCharacter(slug)
+                    .toCharacterLight()
             } catch (e: Exception) {
                 Log.e(TAG, "Error while fetching character with id $slug", e)
                 throw e
@@ -54,7 +57,7 @@ class CharacterRepositoryImpl @Inject constructor(
     override suspend fun getFilteredCharacterPaginated(
         sort: String?,
         name: String?
-    ): Flow<PagingData<CharacterType>> {
+    ): Flow<PagingData<CharacterLightModel>> {
         return withContext(ioDispatcher) {
             try {
                 Pager(
@@ -63,7 +66,7 @@ class CharacterRepositoryImpl @Inject constructor(
                         enablePlaceholders = false
                     ),
                     pagingSourceFactory = { characterRemoteDataSource.createCharacterPagingSource(sort, name) }
-                ).flow
+                ).flow.toCharacterLight()
             } catch (e: Exception) {
                 Log.e(TAG, "Error while creating character paging source with sort $sort and name $name", e)
                 throw e

@@ -1,19 +1,21 @@
 package fr.deuspheara.potterdbapp.ui.characters
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import fr.deuspheara.potterdbapp.data.network.model.CharacterLightModel
 import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 
-class CharacterPagingAdapter : PagingDataAdapter<CharacterType, CharacterViewHolder>(COMPARATOR) {
+class CharacterPagingAdapter : PagingDataAdapter<CharacterLightModel, CharacterViewHolder>(COMPARATOR) {
 
     companion object {
-        private val COMPARATOR = object : DiffUtil.ItemCallback<CharacterType>() {
-            override fun areItemsTheSame(oldItem: CharacterType, newItem: CharacterType): Boolean {
-                return oldItem.id  == newItem.id
+        private val COMPARATOR = object : DiffUtil.ItemCallback<CharacterLightModel>() {
+            override fun areItemsTheSame(oldItem: CharacterLightModel, newItem: CharacterLightModel): Boolean {
+                return oldItem.slug  == newItem.slug
             }
 
-            override fun areContentsTheSame(oldItem: CharacterType, newItem: CharacterType): Boolean {
+            override fun areContentsTheSame(oldItem: CharacterLightModel, newItem: CharacterLightModel): Boolean {
                 return oldItem == newItem
             }
         }

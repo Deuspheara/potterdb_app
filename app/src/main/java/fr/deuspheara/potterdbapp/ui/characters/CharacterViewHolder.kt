@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import fr.deuspheara.potterdbapp.R
+import fr.deuspheara.potterdbapp.data.network.model.CharacterLightModel
 import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 import fr.deuspheara.potterdbapp.databinding.ItemCharacterBinding
 
@@ -30,23 +31,23 @@ class CharacterViewHolder private constructor(
         }
     }
 
-    fun bind(character: CharacterType) {
+    fun bind(character: CharacterLightModel) {
         val binding = ItemCharacterBinding.bind(itemView)
 
         binding.apply {
-            characterImageView.load(character.attributes.image){
+            characterImageView.load(character.image){
                 placeholder(R.drawable.missing_character)
 
                 error(R.drawable.missing_character)
             }
 
-            nameCharacter.text = character.attributes.name
+            nameCharacter.text = character.name
 
-            speciesCharacter.text = character.attributes.species
+            speciesCharacter.text = character.species
 
             characterCard.setOnClickListener{
                 val bundle : Bundle = bundleOf(
-                    "character_slug" to character.attributes.slug
+                    "character_slug" to character.slug
                 )
                 val action = CharactersFragmentDirections.actionCharactersFragmentToCharacterDetailsFragment()
                itemView.findNavController().navigate(action.actionId, bundle)

@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
+import fr.deuspheara.potterdbapp.data.network.model.CharacterLightModel
 import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 import fr.deuspheara.potterdbapp.domain.character.GetFilteredCharacterPaginatedUseCase
 import kotlinx.coroutines.flow.*
@@ -15,7 +17,7 @@ import javax.inject.Inject
 data class CharacterState(
     val isInProgress: Boolean,
     val currentError: Exception?,
-    val successModel: Flow<PagingData<CharacterType>>?
+    val successModel: Flow<PagingData<CharacterLightModel>>?
 )
 
 @HiltViewModel
@@ -30,16 +32,15 @@ class CharacterViewModel @Inject constructor(
     }
 
 
-    private val _state = MutableStateFlow(
+    private val _characterState = MutableStateFlow(
         CharacterState(
             isInProgress = true,
             currentError = null,
             successModel = null
         )
     )
-
-    val state: StateFlow<CharacterState>
-        get() = _state.asStateFlow()
+    val characterState: StateFlow<CharacterState>
+        get() = _characterState.asStateFlow()
 
 
     /**
@@ -53,14 +54,14 @@ class CharacterViewModel @Inject constructor(
         name: String?
     ){
         Log.d("CharacterViewModel", "Fetch characters")
-        _state.emit(
+        _characterState.emit(
             CharacterState(
                 isInProgress = true,
                 currentError = null,
                 successModel = null
             )
         )
-        _state.emit(
+        _characterState.emit(
             try {
                 CharacterState(
                     isInProgress = false,
@@ -68,7 +69,7 @@ class CharacterViewModel @Inject constructor(
                     successModel = getFilteredCharacterPaginatedUseCase(
                         sort,
                         name
-                    )
+                    ).cachedIn(viewModelScope)
                 )
             } catch (e: Exception) {
                 CharacterState(

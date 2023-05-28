@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
@@ -24,7 +25,7 @@ import kotlinx.coroutines.launch
 class CharactersFragment : Fragment() {
 
     private lateinit var binding: FragmentCharactersBinding
-    private val viewModel: CharacterViewModel by viewModels()
+    private val viewModel: CharacterViewModel by activityViewModels()
     private lateinit var pagingAdapter: CharacterPagingAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +45,7 @@ class CharactersFragment : Fragment() {
         binding.charactersRecyclerView.layoutManager =  LinearLayoutManager(requireContext())
 
         viewLifecycleOwner.lifecycle.coroutineScope.launch{
-            viewModel.state.collectLatest { state ->
+            viewModel.characterState.collectLatest { state ->
                 state.currentError?.let {
                     Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
                     binding.characterProgressBar.isVisible = true
@@ -54,7 +55,7 @@ class CharactersFragment : Fragment() {
 
                     it?.collectLatest { pagingCharacterData ->
                         pagingCharacterData.map {
-                            Log.d("CharacterFragment", it.attributes.name.toString())
+                            Log.d("CharacterFragment", it.name.toString())
                         }
                         pagingAdapter.submitData(pagingCharacterData)
                     }
