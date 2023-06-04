@@ -5,6 +5,8 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import fr.deuspheara.potterdbapp.TestingModelProvider
 import fr.deuspheara.potterdbapp.TestingModelProvider.provideCharacterTypeWithId
+import fr.deuspheara.potterdbapp.data.network.mapper.toCharacterLight
+import fr.deuspheara.potterdbapp.data.network.model.CharacterLightModel
 import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 import fr.deuspheara.potterdbapp.data.repository.CharacterRepository
 import junit.framework.TestCase.assertEquals
@@ -24,15 +26,15 @@ class CharacterRepositoryTestImpl {
     lateinit var characterRepository: CharacterRepository
 
     private lateinit var expectedCharacter: CharacterType.PotterCharacter
-    private lateinit var expectedFilteredCharacters: List<CharacterType>
+    private lateinit var expectedFilteredCharacters: List<CharacterLightModel>
 
     @Before
     fun setUp() {
         hiltAndroidRule.inject()
         expectedCharacter = TestingModelProvider.providePotterCharacter()
         expectedFilteredCharacters = listOf(
-            provideCharacterTypeWithId(""),
-            provideCharacterTypeWithId(""),
+            provideCharacterTypeWithId("").toCharacterLight(),
+            provideCharacterTypeWithId("").toCharacterLight(),
 
         )
     }
@@ -46,7 +48,7 @@ class CharacterRepositoryTestImpl {
     @Test
     fun getFilteredCharacterPaginated() = runTest {
 
-        val actual : List<CharacterType> = characterRepository.getFilteredCharacterPaginated(null, null).asSnapshot(
+        val actual : List<CharacterLightModel> = characterRepository.getFilteredCharacterPaginated(null, null).asSnapshot(
             coroutineScope = this,
         ){
             scrollTo(1)

@@ -4,7 +4,7 @@
     <item>
         <shape>
             <solid
-                android:color="@color/search_background"/>
+                android:color="?attr/colorPrimary"/>
             <corners
                 android:radius="16dp"/>
         </shape>

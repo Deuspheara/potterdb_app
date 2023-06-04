@@ -36,3 +36,15 @@ fun CharacterType.PotterCharacter.toCharacterLight(): CharacterLightModel {
         born = this.born
     )
 }
+
+fun CharacterType.toCharacterLight(): CharacterLightModel {
+    return CharacterLightModel(
+        slug = this.attributes.slug,
+        name = this.attributes.name,
+        image = this.attributes.image,
+        species = this.attributes.species,
+        gender = this.attributes.gender,
+        house = this.attributes.house,
+        born = this.attributes.born
+    )
+}

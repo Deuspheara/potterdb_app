@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".ui.characters.CharacterDetailsFragment">
 
     <ImageView
         android:id="@+id/imageDetailCharacter"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:background="@color/text_title"
+        android:background="?attr/colorOnBackground"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +26,7 @@
         android:layout_marginEnd="16dp"
         android:fontFamily="sans-serif-medium"
         android:text="Name"
-        android:textColor="@color/text_title"
+        android:textColor="?attr/colorOnBackground"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +41,7 @@
         android:layout_marginEnd="16dp"
         android:fontFamily="sans-serif"
         android:text="Unknown"
-        android:textColor="@color/text_title"
+        android:textColor="?attr/colorOnBackground"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -57,7 +56,7 @@
         android:layout_marginEnd="16dp"
         android:fontFamily="sans-serif"
         android:text="Unknown"
-        android:textColor="@color/text_title"
+        android:textColor="?attr/colorOnBackground"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -72,7 +71,7 @@
         android:layout_marginEnd="16dp"
         android:fontFamily="sans-serif"
         android:text="Unknown"
-        android:textColor="@color/text_title"
+        android:textColor="?attr/colorOnBackground"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -83,31 +82,31 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:src="@drawable/ic_birthday"
-        android:tint="@color/text_title"
         app:layout_constraintBottom_toBottomOf="@+id/characterBirthDate"
         app:layout_constraintStart_toStartOf="@+id/nameDetailCharacter"
-        app:layout_constraintTop_toTopOf="@+id/characterBirthDate" />
+        app:layout_constraintTop_toTopOf="@+id/characterBirthDate"
+        app:tint="?attr/colorOnBackground" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:src="@drawable/ic_gender"
-        android:tint="@color/text_title"
         app:layout_constraintBottom_toBottomOf="@+id/characterGender"
         app:layout_constraintStart_toStartOf="@+id/nameDetailCharacter"
         app:layout_constraintTop_toTopOf="@+id/characterGender"
-        app:srcCompat="@drawable/ic_gender" />
+        app:srcCompat="@drawable/ic_gender"
+        app:tint="?attr/colorOnBackground" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:src="@drawable/ic_species"
-        android:tint="@color/text_title"
         app:layout_constraintBottom_toBottomOf="@+id/characterSpecies"
         app:layout_constraintStart_toStartOf="@+id/nameDetailCharacter"
-        app:layout_constraintTop_toTopOf="@+id/characterSpecies" />
+        app:layout_constraintTop_toTopOf="@+id/characterSpecies"
+        app:tint="?attr/colorOnBackground" />
 
     <ImageButton
         android:id="@+id/backButtonCharacter"
@@ -117,8 +116,8 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/rounded_search"
         android:src="@drawable/round_chevron_left_24"
-        android:tint="@color/text_title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/colorOnBackground" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

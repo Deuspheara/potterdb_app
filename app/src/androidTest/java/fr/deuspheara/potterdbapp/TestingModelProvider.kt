@@ -1,5 +1,6 @@
 package fr.deuspheara.potterdbapp
 
+import fr.deuspheara.potterdbapp.data.network.mapper.toCharacterLight
 import fr.deuspheara.potterdbapp.data.network.model.*
 
 object TestingModelProvider {
@@ -9,7 +10,7 @@ object TestingModelProvider {
             data = provideCharacterType(),
 
             meta = providePotterMeta(),
-            links = PotterResponse.PotterLinks(self = "", current = "", next = "", last = "")
+            links = PotterLinks(self = "", current = "", next = "", last = "")
         )
     }
 
@@ -23,7 +24,7 @@ object TestingModelProvider {
                 provideCharacterTypeWithId("5"),
             ),
             meta = providePotterMeta(),
-            links = PotterResponse.PotterLinks(self = "", current = "", next = "", last = "")
+            links = PotterLinks(self = "", current = "", next = "", last = "")
         )
     }
 
@@ -72,8 +73,8 @@ object TestingModelProvider {
         )
     }
 
-    fun providePotterLinks(): PotterResponse.PotterLinks {
-        return PotterResponse.PotterLinks(
+    fun providePotterLinks(): PotterLinks {
+        return PotterLinks(
             self = "",
             current = "",
             next = null,
@@ -81,9 +82,9 @@ object TestingModelProvider {
         )
     }
 
-    fun providePotterMeta(): PotterResponse.PotterMeta {
-        return PotterResponse.PotterMeta(
-            pagination = PotterResponse.PotterMeta.PotterPagination(
+    fun providePotterMeta(): PotterMeta {
+        return PotterMeta(
+            pagination = PotterMeta.PotterPagination(
                 current = 0,
                 next = 0,
                 last = 0,
@@ -94,8 +95,8 @@ object TestingModelProvider {
         )
     }
 
-    fun providePotterPagination(): PotterResponse.PotterMeta.PotterPagination {
-        return PotterResponse.PotterMeta.PotterPagination(
+    fun providePotterPagination(): PotterMeta.PotterPagination {
+        return PotterMeta.PotterPagination(
             current = 0,
             next = null,
             last = 0,

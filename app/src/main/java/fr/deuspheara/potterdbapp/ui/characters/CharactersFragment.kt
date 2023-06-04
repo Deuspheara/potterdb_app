@@ -52,17 +52,17 @@ class CharactersFragment : Fragment() {
                 }
 
                 state.successModel.let {
-
+                    binding.characterProgressBar.visibility = View.GONE
                     it?.collectLatest { pagingCharacterData ->
                         pagingCharacterData.map {
                             Log.d("CharacterFragment", it.name.toString())
                         }
                         pagingAdapter.submitData(pagingCharacterData)
                     }
-                    binding.characterProgressBar.isVisible = false
+
                 }
                 state.isInProgress.let {
-                    binding.characterProgressBar.isVisible = it
+                    binding.characterProgressBar.visibility = View.VISIBLE
 
                 }
 

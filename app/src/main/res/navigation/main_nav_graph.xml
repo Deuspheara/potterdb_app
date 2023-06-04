@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -23,11 +22,10 @@
         <action
             android:id="@+id/action_charactersFragment_to_characterDetailsFragment"
             app:destination="@id/characterDetailsFragment"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left"
-            app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right"
-            app:popUpToInclusive="false" />
+            app:popUpTo="@id/charactersFragment" />
+
+
+
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
@@ -47,11 +45,7 @@
         <action
             android:id="@+id/action_characterDetailsFragment_to_charactersFragment"
             app:destination="@id/charactersFragment"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left"
-            app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/from_right"
-            app:popUpTo="@id/characterDetailsFragment"
             app:popUpToInclusive="false" />
+
     </fragment>
 </navigation>

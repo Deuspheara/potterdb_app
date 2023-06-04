@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.paging.map
 import coil.load
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,10 +72,11 @@ class CharacterDetailsFragment : Fragment() {
                             }
 
                             backButtonCharacter.setOnClickListener {
-                                val action = CharacterDetailsFragmentDirections.actionCharacterDetailsFragmentToCharactersFragment()
-                                findNavController(
-                                    this@CharacterDetailsFragment
-                                ).navigate(action)
+//                                val action = CharacterDetailsFragmentDirections.actionCharacterDetailsFragmentToCharactersFragment()
+//                                findNavController(
+//                                    this@CharacterDetailsFragment
+//                                ).navigate(action)
+                                findNavController().popBackStack()
                             }
                         }
                     }
