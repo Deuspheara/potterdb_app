@@ -5,12 +5,12 @@ buildscript {
         compileSdkVersion = 33
         okHttpLibVersion = "4.9.3"
         retrofitLibVersion = "2.9.0"
-        hiltLibVersion = "2.44"
-        coroutinesVersion = "1.6.3"
+        hiltLibVersion = "2.45"
+        coroutinesVersion = "1.7.1"
         roomVersion = "2.5.0"
         nav_version = "2.5.3"
         paging_version = "3.1.1"
-        coilVersion = "2.2.2"
+        coilVersion = "2.3.0"
         lifecycleVersion = "2.6.1"
     }
     dependencies {

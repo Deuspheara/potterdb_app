@@ -100,8 +100,8 @@ dependencies {
     implementation "io.coil-kt:coil:$coilVersion"
 
     //Pagination
-    implementation "androidx.paging:paging-runtime-ktx:3.2.0-alpha04"
-    implementation "androidx.paging:paging-testing:3.2.0-alpha04"
+    implementation "androidx.paging:paging-runtime-ktx:3.2.0-alpha06"
+    implementation "androidx.paging:paging-testing:3.2.0-alpha06"
     // Coroutine
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
 
@@ -109,12 +109,16 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 
     //Dagger test
-    testImplementation("com.google.dagger:hilt-android-testing:2.44")
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.44")
-    kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.44"
-    androidTestImplementation 'com.squareup.okhttp3:mockwebserver3:5.0.0-alpha.2'
+    testImplementation("com.google.dagger:hilt-android-testing:2.45")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.45")
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.44.2"
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver3:5.0.0-alpha.11'
 
-
+    //room
+    implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    androidTestImplementation "androidx.room:room-testing:$roomVersion"
 
     //androidx test
     androidTestImplementation 'androidx.test:runner:1.5.2'
