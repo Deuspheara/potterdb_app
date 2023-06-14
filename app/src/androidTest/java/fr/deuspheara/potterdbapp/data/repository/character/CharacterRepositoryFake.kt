@@ -3,8 +3,7 @@ package fr.deuspheara.potterdbapp.data.repository.character
 import androidx.paging.*
 import fr.deuspheara.potterdbapp.TestingModelProvider
 import fr.deuspheara.potterdbapp.data.network.mapper.toCharacterLight
-import fr.deuspheara.potterdbapp.data.network.model.CharacterLightModel
-import fr.deuspheara.potterdbapp.data.network.model.CharacterType
+import fr.deuspheara.potterdbapp.core.model.character.CharacterLightModel
 import fr.deuspheara.potterdbapp.data.paging.CharacterPagingSourceFake
 import fr.deuspheara.potterdbapp.data.repository.CharacterRepository
 import kotlinx.coroutines.flow.Flow
@@ -26,5 +25,9 @@ class CharacterRepositoryFake @Inject constructor() : CharacterRepository {
             ),
             pagingSourceFactory = { CharacterPagingSourceFake() }
         ).flow.toCharacterLight()
+    }
+
+    override suspend fun toggleFavoriteStatus(slug: String) {
+        TODO("Not yet implemented")
     }
 }

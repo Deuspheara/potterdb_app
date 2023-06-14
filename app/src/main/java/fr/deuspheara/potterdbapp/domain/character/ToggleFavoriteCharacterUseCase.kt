@@ -7,19 +7,20 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetCharacterBySlugUseCase @Inject constructor(
-    private val characterRepository: CharacterRepository,
+class ToggleFavoriteCharacterUseCase @Inject constructor(
+    private val characterRepository: CharacterRepository
 ) {
-    private companion object {
-        private const val TAG = "GetCharacterBySlugUseCase"
+    private companion object{
+        private const val TAG = "ToggleFavoriteCharacterUseCase"
     }
 
     suspend operator fun invoke(
-        slug : String
-    ): Flow<CharacterLightModel> = flow {
+        slug : String,
+        characterLightModel: CharacterLightModel
+    ) : Flow<Boolean> = flow {
         try {
-            Log.d(TAG, "Get character with slug: $slug")
-            emit(characterRepository.getCharacter(slug))
+            Log.d(TAG, "Toggle favorite character with slug: $slug")
+            emit(characterRepository.toggleFavoriteCharacter(slug, characterLightModel))
         } catch (e: Exception) {
             Log.e(TAG, "Error while fetching character", e)
             throw e

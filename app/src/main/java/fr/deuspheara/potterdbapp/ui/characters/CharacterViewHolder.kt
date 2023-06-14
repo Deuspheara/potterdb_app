@@ -1,22 +1,20 @@
 package fr.deuspheara.potterdbapp.ui.characters
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import fr.deuspheara.potterdbapp.R
-import fr.deuspheara.potterdbapp.data.network.model.CharacterLightModel
-import fr.deuspheara.potterdbapp.data.network.model.CharacterType
+import fr.deuspheara.potterdbapp.core.model.character.CharacterLightModel
 import fr.deuspheara.potterdbapp.databinding.ItemCharacterBinding
 
 class CharacterViewHolder private constructor(
-    private val itemView: View
+    itemView: View,
 ) : RecyclerView.ViewHolder(itemView) {
 
     companion object {
@@ -26,16 +24,20 @@ class CharacterViewHolder private constructor(
                     R.layout.item_character,
                     parent,
                     false
-                )
+                ),
             )
         }
     }
 
-    fun bind(character: CharacterLightModel) {
+    fun bind(
+        character: CharacterLightModel,
+        isFavorite: Boolean,
+        favoriteButtonTap: () -> Unit
+    ) {
         val binding = ItemCharacterBinding.bind(itemView)
 
         binding.apply {
-            characterImageView.load(character.image){
+            characterImageView.load(character.image) {
                 placeholder(R.drawable.missing_character)
 
                 error(R.drawable.missing_character)
@@ -45,17 +47,23 @@ class CharacterViewHolder private constructor(
 
             speciesCharacter.text = character.species
 
-            characterCard.setOnClickListener{
-                val bundle : Bundle = bundleOf(
+            characterCard.setOnClickListener {
+                val bundle: Bundle = bundleOf(
                     "character_slug" to character.slug
                 )
-                val action = CharactersFragmentDirections.actionCharactersFragmentToCharacterDetailsFragment()
-               itemView.findNavController().navigate(action.actionId, bundle)
+                val action =
+                    CharactersFragmentDirections.actionCharactersFragmentToCharacterDetailsFragment()
+                itemView.findNavController().navigate(action.actionId, bundle)
+            }
+
+            characterFavoriteButton.setOnClickListener {
+                characterFavoriteButton.setImageResource(
+                    if (isFavorite) R.drawable.ic_heart
+                    else R.drawable.ic_heart_filled
+                )
+                favoriteButtonTap()
+                Log.d("CharacterViewHolder", "Favorite button tapped")
             }
         }
-
-
     }
-
-
 }

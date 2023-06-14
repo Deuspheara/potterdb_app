@@ -2,9 +2,8 @@ package fr.deuspheara.potterdbapp.data.network.mapper
 
 import androidx.paging.PagingData
 import androidx.paging.map
-import fr.deuspheara.potterdbapp.data.network.model.CharacterLightModel
+import fr.deuspheara.potterdbapp.core.model.character.CharacterLightModel
 import fr.deuspheara.potterdbapp.data.network.model.CharacterType
-import fr.deuspheara.potterdbapp.data.network.model.PotterResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -13,7 +12,7 @@ fun Flow<PagingData<CharacterType>>.toCharacterLight(
     return this.map { pagedData ->
         pagedData.map { characterPotter ->
             CharacterLightModel(
-             slug = characterPotter.attributes.slug,
+                slug = characterPotter.attributes.slug,
                 name = characterPotter.attributes.name,
                 image = characterPotter.attributes.image,
                 species = characterPotter.attributes.species,

@@ -5,12 +5,15 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import fr.deuspheara.potterdbapp.core.coroutine.DispatcherModule
+import fr.deuspheara.potterdbapp.core.model.character.CharacterFullModel
 import fr.deuspheara.potterdbapp.data.datasource.CharacterRemoteDataSource
+import fr.deuspheara.potterdbapp.data.datasource.character.local.CharacterLocalDataSource
 import fr.deuspheara.potterdbapp.data.network.mapper.toCharacterLight
-import fr.deuspheara.potterdbapp.data.network.model.CharacterLightModel
-import fr.deuspheara.potterdbapp.data.network.model.CharacterType
+import fr.deuspheara.potterdbapp.core.model.character.CharacterLightModel
+import fr.deuspheara.potterdbapp.data.database.model.CharacterEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -20,10 +23,18 @@ interface CharacterRepository {
         sort: String?,
         name: String?
     ): Flow<PagingData<CharacterLightModel>>
+
+    suspend fun toggleFavoriteCharacter(
+        slug: String,
+        characterLightModel: CharacterLightModel
+    ): Boolean
+
+    suspend fun getFavoriteCharacters(): Flow<List<CharacterLightModel>>
 }
 
 class CharacterRepositoryImpl @Inject constructor(
     private val characterRemoteDataSource: CharacterRemoteDataSource,
+    private val characterLocalDataSource: CharacterLocalDataSource,
     @DispatcherModule.DispatcherIO private val ioDispatcher: CoroutineDispatcher,
 ) : CharacterRepository {
 
@@ -65,13 +76,77 @@ class CharacterRepositoryImpl @Inject constructor(
                         pageSize = 20,
                         enablePlaceholders = false
                     ),
-                    pagingSourceFactory = { characterRemoteDataSource.createCharacterPagingSource(sort, name) }
+                    pagingSourceFactory = {
+                        characterRemoteDataSource.createCharacterPagingSource(
+                            sort,
+                            name
+                        )
+                    }
                 ).flow.toCharacterLight()
             } catch (e: Exception) {
-                Log.e(TAG, "Error while creating character paging source with sort $sort and name $name", e)
+                Log.e(
+                    TAG,
+                    "Error while creating character paging source with sort $sort and name $name",
+                    e
+                )
                 throw e
             }
         }
     }
+
+    /**
+     * Toggle the favorite status of a character
+     * @param slug the id of the character
+     */
+    override suspend fun toggleFavoriteCharacter(
+        slug: String,
+        characterLightModel: CharacterLightModel
+    ): Boolean {
+        return withContext(ioDispatcher) {
+            try {
+                Log.d(TAG, "Toggle favorite character with id: $slug")
+                val character = characterLocalDataSource.getCharacterBySlug(slug)
+                if (character != null) {
+                    characterLocalDataSource.toggleFavoriteStatus(slug, character.isFavorite)
+                } else {
+                    val characterEntity = CharacterEntity(
+                        slug = characterLightModel.slug ?: "",
+                        name = characterLightModel.name ?: "",
+                        image = characterLightModel.image ?: "",
+                        species = characterLightModel.species ?: "",
+                        gender = characterLightModel.gender ?: "",
+                        house = characterLightModel.house ?: "",
+                        born = characterLightModel.born ?: "",
+                        isFavorite = true,
+                    );
+                    characterLocalDataSource.insertCharacterIfNotExist(characterEntity)
+                }
+                true // Return true if the operation is successful
+            } catch (e: Exception) {
+                Log.e(TAG, "Error while toggling favorite status for character with id $slug", e)
+                false // Return false if an error occurs
+            }
+        }
+    }
+
+    /**
+     * Get all favorite characters
+     * @return a list of favorite characters [CharacterEntity]
+     */
+    override suspend fun getFavoriteCharacters(): Flow<List<CharacterLightModel>> {
+        return withContext(ioDispatcher) {
+            try {
+                characterLocalDataSource.getAllCharacters().map {
+                    it.map { characterEntity ->
+                        CharacterEntity.toCharacterLight(characterEntity)
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error while fetching favorite characters", e)
+                throw e
+            }
+        }
+    }
+
 
 }

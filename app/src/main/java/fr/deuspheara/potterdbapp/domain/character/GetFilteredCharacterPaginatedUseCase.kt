@@ -2,8 +2,7 @@ package fr.deuspheara.potterdbapp.domain.character
 
 import android.util.Log
 import androidx.paging.PagingData
-import fr.deuspheara.potterdbapp.data.network.model.CharacterLightModel
-import fr.deuspheara.potterdbapp.data.network.model.CharacterType
+import fr.deuspheara.potterdbapp.core.model.character.CharacterLightModel
 import fr.deuspheara.potterdbapp.data.repository.CharacterRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

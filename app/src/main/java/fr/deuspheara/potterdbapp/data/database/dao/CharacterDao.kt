@@ -32,4 +32,10 @@ interface CharacterDao {
      */
     @Query("SELECT * FROM characters WHERE slug = :slug LIMIT 1")
     suspend fun getCharacterBySlug(slug: String): CharacterEntity?
+
+    /**
+     * SQL query to update Favorite state
+     */
+    @Query("UPDATE characters SET isFavorite = :isFavorite WHERE slug = :slug")
+    suspend fun updateFavoriteStatus(slug: String, isFavorite: Boolean)
 }

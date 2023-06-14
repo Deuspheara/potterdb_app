@@ -20,7 +20,7 @@
         android:text="Name"
         android:textColor="?attr/colorOnBackground"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/characterFavoriteButton"
         app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="@+id/characterCard"
         tools:text="Name" />
@@ -33,10 +33,11 @@
         android:text="species"
         android:textColor="?attr/colorOnBackground"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/nameCharacter"
         app:layout_constraintStart_toStartOf="@+id/nameCharacter"
         app:layout_constraintTop_toBottomOf="@+id/nameCharacter"
         tools:text="species" />
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -66,4 +67,16 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
+    <ImageButton
+        android:id="@+id/characterFavoriteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_search"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_heart" />
 </androidx.constraintlayout.widget.ConstraintLayout>

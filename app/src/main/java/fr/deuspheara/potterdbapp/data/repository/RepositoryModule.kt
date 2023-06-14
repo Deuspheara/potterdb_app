@@ -1,26 +1,17 @@
 package fr.deuspheara.potterdbapp.data.repository
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import fr.deuspheara.potterdbapp.core.coroutine.DispatcherModule
-import fr.deuspheara.potterdbapp.data.datasource.CharacterRemoteDataSource
-import kotlinx.coroutines.CoroutineDispatcher
 
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RepositoryModule {
+abstract class RepositoryModule {
+    @Binds
+    abstract fun bindCharacterRepository(
+        impl : CharacterRepositoryImpl
+    ): CharacterRepository
 
-    @Provides
-    fun provideCharacterRepository(
-        @DispatcherModule.DispatcherIO ioDispatcher: CoroutineDispatcher,
-        characterRemoteDataSource: CharacterRemoteDataSource
-    ): CharacterRepository {
-        return CharacterRepositoryImpl(
-            characterRemoteDataSource = characterRemoteDataSource,
-            ioDispatcher = ioDispatcher
-        )
-    }
 }

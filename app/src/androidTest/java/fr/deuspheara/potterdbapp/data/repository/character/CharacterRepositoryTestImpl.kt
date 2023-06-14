@@ -6,7 +6,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import fr.deuspheara.potterdbapp.TestingModelProvider
 import fr.deuspheara.potterdbapp.TestingModelProvider.provideCharacterTypeWithId
 import fr.deuspheara.potterdbapp.data.network.mapper.toCharacterLight
-import fr.deuspheara.potterdbapp.data.network.model.CharacterLightModel
+import fr.deuspheara.potterdbapp.core.model.character.CharacterLightModel
 import fr.deuspheara.potterdbapp.data.network.model.CharacterType
 import fr.deuspheara.potterdbapp.data.repository.CharacterRepository
 import junit.framework.TestCase.assertEquals

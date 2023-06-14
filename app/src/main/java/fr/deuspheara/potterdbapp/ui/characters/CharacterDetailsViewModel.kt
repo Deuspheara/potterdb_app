@@ -3,13 +3,12 @@ package fr.deuspheara.potterdbapp.ui.characters
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import fr.deuspheara.potterdbapp.data.network.model.CharacterLightModel
-import fr.deuspheara.potterdbapp.data.network.model.CharacterType
+import fr.deuspheara.potterdbapp.core.model.character.CharacterLightModel
 import fr.deuspheara.potterdbapp.domain.character.GetCharacterBySlugUseCase
-import fr.deuspheara.potterdbapp.domain.character.GetFilteredCharacterPaginatedUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 
@@ -61,7 +60,7 @@ class CharacterDetailsViewModel @Inject constructor(
                     currentError = null,
                     successModel = getCharacterBySlugUseCase(
                         slug = slug
-                    )
+                    ).first()
                 )
             } catch (e: Exception) {
                 CharacterDetailsState(

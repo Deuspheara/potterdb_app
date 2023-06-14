@@ -1,8 +1,8 @@
-package fr.deuspheara.potterdbapp.data.network.model
+package fr.deuspheara.potterdbapp.core.model.character
 
 import com.google.gson.annotations.SerializedName
 
-class CharacterLightModel (
+class CharacterLightModel(
     @SerializedName("slug")
     val slug: String?,
     @SerializedName("name")
@@ -12,12 +12,28 @@ class CharacterLightModel (
     @SerializedName("species")
     val species: String?,
     @SerializedName("gender")
-    val gender : String?,
+    val gender: String?,
     @SerializedName("house")
-    val house : String?,
+    val house: String?,
     @SerializedName("born")
     val born: String?,
 ){
+
+    var isFavorite: Boolean = false
+    companion object {
+        fun fromFullModel(fullModel: CharacterFullModel): CharacterLightModel {
+            return CharacterLightModel(
+                slug = fullModel.slug,
+                name = fullModel.name,
+                image = fullModel.image,
+                species = fullModel.species,
+                gender = fullModel.gender,
+                house = fullModel.house,
+                born = fullModel.born
+            )
+        }
+    }
+
     override fun equals(other: Any?): Boolean {
         if (other == null || other !is CharacterLightModel) {
             return false

@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -16,7 +17,7 @@ interface CharacterLocalDataSource {
     /**
      * SQL query to insert a [CharacterEntity]
      */
-    suspend fun insertCharacter(entity: CharacterEntity) : Long
+    suspend fun insertCharacterIfNotExist(entity: CharacterEntity) : Long
 
     /**
      * SQL query to insert list of [CharacterEntity]
@@ -32,6 +33,11 @@ interface CharacterLocalDataSource {
      * SQL query to retrieve a [CharacterEntity] from the "characters" table by slug
      */
     suspend fun getCharacterBySlug(slug: String): CharacterEntity?
+
+    /**
+     * SQL query to update Favorite state
+     */
+    suspend fun toggleFavoriteStatus(slug: String, isFavorite: Boolean)
 }
 
 class CharacterLocalDataSourceImpl @Inject constructor(
@@ -43,8 +49,7 @@ class CharacterLocalDataSourceImpl @Inject constructor(
         private const val TAG = "CharacterLocalDataSourceImpl"
     }
 
-    override suspend fun insertCharacter(entity: CharacterEntity) : Long {
-        return withContext(ioContext){
+    override suspend fun insertCharacterIfNotExist(entity: CharacterEntity) : Long = withContext(ioContext) {
             try {
                 val existingCharacter = database.withTransaction {
                     database.characterDao.getCharacterBySlug(entity.slug)
@@ -61,7 +66,6 @@ class CharacterLocalDataSourceImpl @Inject constructor(
                 Log.e(TAG, "Error while inserting character in database with slug: ${entity.slug}, error: $e")
                 throw e
             }
-        }
 
     }
 
@@ -83,7 +87,7 @@ class CharacterLocalDataSourceImpl @Inject constructor(
             Log.e(TAG, "Error while getting characters, error: $e")
             throw e
         }
-    }
+    }.flowOn(ioContext)
 
     override suspend fun getCharacterBySlug(slug: String): CharacterEntity? = withContext(ioContext) {
         try {
@@ -91,6 +95,17 @@ class CharacterLocalDataSourceImpl @Inject constructor(
         } catch (e: Exception) {
             Log.e(TAG, "Error while getting character by slug, error: $e")
             throw e
+        }
+    }
+
+    override suspend fun toggleFavoriteStatus(slug: String, isFavorite: Boolean) {
+        withContext(ioContext){
+            try {
+                database.characterDao.updateFavoriteStatus(slug,isFavorite)
+            } catch (e: Exception) {
+                Log.e(TAG, "Error while updating favorite state of character with slug $slug, error: $e")
+                throw e
+            }
         }
     }
 }

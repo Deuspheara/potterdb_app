@@ -1,21 +1,28 @@
 package fr.deuspheara.potterdbapp.ui.characters
 
-import android.annotation.SuppressLint
+import android.util.Log
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import fr.deuspheara.potterdbapp.data.network.model.CharacterLightModel
-import fr.deuspheara.potterdbapp.data.network.model.CharacterType
+import fr.deuspheara.potterdbapp.core.model.character.CharacterLightModel
 
-class CharacterPagingAdapter : PagingDataAdapter<CharacterLightModel, CharacterViewHolder>(COMPARATOR) {
+class CharacterPagingAdapter(
+    private val toggleFavorite: (CharacterLightModel) -> Unit
+) : PagingDataAdapter<CharacterLightModel, CharacterViewHolder>(COMPARATOR) {
 
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<CharacterLightModel>() {
-            override fun areItemsTheSame(oldItem: CharacterLightModel, newItem: CharacterLightModel): Boolean {
-                return oldItem.slug  == newItem.slug
+            override fun areItemsTheSame(
+                oldItem: CharacterLightModel,
+                newItem: CharacterLightModel
+            ): Boolean {
+                return oldItem.slug == newItem.slug
             }
 
-            override fun areContentsTheSame(oldItem: CharacterLightModel, newItem: CharacterLightModel): Boolean {
+            override fun areContentsTheSame(
+                oldItem: CharacterLightModel,
+                newItem: CharacterLightModel
+            ): Boolean {
                 return oldItem == newItem
             }
         }
@@ -26,7 +33,15 @@ class CharacterPagingAdapter : PagingDataAdapter<CharacterLightModel, CharacterV
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        //TODO: return PotterType
-        holder.bind(getItem(position) ?: return )
+        val character = getItem(position) ?: return
+        val isFavorite = character.isFavorite
+        holder.bind(
+            character,
+            isFavorite = isFavorite,
+            favoriteButtonTap = {
+                Log.d("CharacterPagingAdapter", "Toggle favorite character with slug: ${character.slug}")
+                toggleFavorite(character)
+            }
+        )
     }
 }

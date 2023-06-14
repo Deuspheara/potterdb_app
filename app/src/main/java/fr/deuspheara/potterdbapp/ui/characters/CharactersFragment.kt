@@ -38,7 +38,14 @@ class CharactersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        pagingAdapter = CharacterPagingAdapter()
+        pagingAdapter = CharacterPagingAdapter { character ->
+            lifecycleScope.launch {
+                character.slug?.let {
+                    viewModel.toggleFavorite(it, character)
+                }
+            }
+            Log.d("CharacterFragment", character.name.toString())
+        }
 
 
         binding.charactersRecyclerView.adapter = pagingAdapter
