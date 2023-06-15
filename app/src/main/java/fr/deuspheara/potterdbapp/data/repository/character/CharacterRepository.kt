@@ -117,14 +117,16 @@ class CharacterRepositoryImpl @Inject constructor(
                         gender = characterLightModel.gender ?: "",
                         house = characterLightModel.house ?: "",
                         born = characterLightModel.born ?: "",
+                        height = characterLightModel.height ?: "",
+                        weight = characterLightModel.weight ?: "",
                         isFavorite = true,
                     );
                     characterLocalDataSource.insertCharacterIfNotExist(characterEntity)
                 }
-                true // Return true if the operation is successful
+                true
             } catch (e: Exception) {
                 Log.e(TAG, "Error while toggling favorite status for character with id $slug", e)
-                false // Return false if an error occurs
+                false
             }
         }
     }

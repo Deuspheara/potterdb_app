@@ -1,4 +1,4 @@
-package fr.deuspheara.potterdbapp.ui.characters
+package fr.deuspheara.potterdbapp.ui.characters.detail
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

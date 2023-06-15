@@ -145,7 +145,4 @@ data class CharacterFullModel(
      */
     @SerializedName("wiki")
     val wiki: String?
-) {
-    companion object {
-    }
-}
+)

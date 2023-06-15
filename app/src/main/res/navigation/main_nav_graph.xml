@@ -39,7 +39,7 @@
         tools:layout="@layout/fragment_movies" />
     <fragment
         android:id="@+id/characterDetailsFragment"
-        android:name="fr.deuspheara.potterdbapp.ui.characters.CharacterDetailsFragment"
+        android:name="fr.deuspheara.potterdbapp.ui.characters.detail.CharacterDetailsFragment"
         android:label="fragment_character_details"
         tools:layout="@layout/fragment_character_details" >
         <action

@@ -7,7 +7,7 @@ import fr.deuspheara.potterdbapp.data.database.model.CharacterEntity
 
 @Database(
     entities = [CharacterEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 abstract class FavoriteDatabase : RoomDatabase() {

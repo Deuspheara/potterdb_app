@@ -38,8 +38,15 @@ data class CharacterEntity (
 
     /** Born of the character */
     @ColumnInfo(name = "born")
-    val born: String
+    val born: String,
 
+    /** Height of the character */
+    @ColumnInfo(name = "height")
+    val height: String,
+
+    /** Weight of the character */
+    @ColumnInfo(name = "weight")
+    val weight: String,
 ){
     companion object {
         fun toCharacterLight(characterEntity: CharacterEntity): CharacterLightModel {
@@ -50,7 +57,9 @@ data class CharacterEntity (
                 species = characterEntity.species,
                 gender = characterEntity.gender,
                 house = characterEntity.house,
-                born = characterEntity.born
+                born = characterEntity.born,
+                height = characterEntity.height,
+                weight = characterEntity.weight,
             )
         }
     }

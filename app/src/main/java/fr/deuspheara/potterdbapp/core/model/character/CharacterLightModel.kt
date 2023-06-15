@@ -17,6 +17,10 @@ class CharacterLightModel(
     val house: String?,
     @SerializedName("born")
     val born: String?,
+    @SerializedName("height")
+    val height: String?,
+    @SerializedName("weight")
+    val weight: String?,
 ){
 
     var isFavorite: Boolean = false
@@ -29,7 +33,9 @@ class CharacterLightModel(
                 species = fullModel.species,
                 gender = fullModel.gender,
                 house = fullModel.house,
-                born = fullModel.born
+                born = fullModel.born,
+                height = fullModel.height,
+                weight = fullModel.weight
             )
         }
     }
@@ -45,6 +51,8 @@ class CharacterLightModel(
                 this.species == other.species &&
                 this.gender == other.gender &&
                 this.house == other.house &&
-                this.born == other.born
+                this.born == other.born &&
+                this.height == other.height &&
+                this.weight == other.weight
     }
 }
