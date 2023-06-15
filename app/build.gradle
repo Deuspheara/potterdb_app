@@ -30,12 +30,13 @@ android {
 
     defaultConfig {
         applicationId "fr.deuspheara.potterdbapp"
-        minSdk 24
-        targetSdk 33
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        buildConfigField "String", "BASE_URL", "\"https://api.potterdb.com/v1/\""
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "fr.deuspheara.potterdbapp.ApplicationRunner"
     }
 
     buildTypes {
@@ -52,12 +53,17 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
+
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
+        freeCompilerArgs += [
+                "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+        ]
     }
+    hilt { enableAggregatingTask = true }
 
 
 }
@@ -68,13 +74,12 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     // Injection Dagger Hilt
     implementation "com.google.dagger:hilt-android:$hiltLibVersion"
-    kapt "com.google.dagger:hilt-android-compiler:$hiltLibVersion"
+    kapt "com.google.dagger:hilt-compiler:$hiltLibVersion"
 
     //Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -83,9 +88,10 @@ dependencies {
     //Networking
     implementation "com.squareup.retrofit2:retrofit:$retrofitLibVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitLibVersion"
+    testImplementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation "com.squareup.okhttp3:okhttp:$okHttpLibVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpLibVersion"
-    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+    implementation 'com.google.code.gson:gson:2.10.1'
 
     // Coroutine
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
@@ -95,6 +101,27 @@ dependencies {
     implementation "io.coil-kt:coil:$coilVersion"
 
     //Pagination
-    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+    implementation "androidx.paging:paging-runtime-ktx:3.2.0-alpha06"
+    implementation "androidx.paging:paging-testing:3.2.0-alpha06"
+    // Coroutine
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
 
+    //Junit
+    testImplementation 'junit:junit:4.13.2'
+
+    //Dagger test
+    testImplementation("com.google.dagger:hilt-android-testing:2.45")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.45")
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.44.2"
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver3:5.0.0-alpha.11'
+
+    //room
+    implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    androidTestImplementation "androidx.room:room-testing:$roomVersion"
+
+    //androidx test
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
 }

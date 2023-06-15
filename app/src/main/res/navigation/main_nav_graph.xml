@@ -1,33 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph.xml"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/charactersFragment">
 
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="fr.deuspheara.potterdbapp.ui.main.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
-    <fragment
-        android:id="@+id/booksFragment"
-        android:name="fr.deuspheara.potterdbapp.ui.books.BooksFragment"
-        android:label="fragment_books"
-        tools:layout="@layout/fragment_books" />
     <fragment
         android:id="@+id/charactersFragment"
         android:name="fr.deuspheara.potterdbapp.ui.characters.CharactersFragment"
         android:label="fragment_characters"
-        tools:layout="@layout/fragment_characters" />
+        tools:layout="@layout/fragment_characters" >
+        <action
+            android:id="@+id/action_charactersFragment_to_characterDetailsFragment"
+            app:destination="@id/characterDetailsFragment"
+            app:popUpTo="@id/charactersFragment" />
+
+
+
+    </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="fr.deuspheara.potterdbapp.ui.favorite.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
     <fragment
-        android:id="@+id/moviesFragment"
-        android:name="fr.deuspheara.potterdbapp.ui.movies.MoviesFragment"
-        android:label="fragment_movies"
-        tools:layout="@layout/fragment_movies" />
+        android:id="@+id/characterDetailsFragment"
+        android:name="fr.deuspheara.potterdbapp.ui.characters.detail.CharacterDetailsFragment"
+        android:label="fragment_character_details"
+        tools:layout="@layout/fragment_character_details" >
+        <action
+            android:id="@+id/action_characterDetailsFragment_to_charactersFragment"
+            app:destination="@id/charactersFragment"
+            app:popUpToInclusive="false" />
+
+    </fragment>
 </navigation>

@@ -25,20 +25,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.homeFragment -> {
-                    navController.navigate(R.id.homeFragment)
-                    true
-                }
                 R.id.charactersFragment -> {
                     navController.navigate(R.id.charactersFragment)
-                    true
-                }
-                R.id.moviesFragment -> {
-                    navController.navigate(R.id.moviesFragment)
-                    true
-                }
-                R.id.booksFragment -> {
-                    navController.navigate(R.id.booksFragment)
                     true
                 }
                 R.id.favoriteFragment -> {
