@@ -88,6 +88,7 @@ dependencies {
     //Networking
     implementation "com.squareup.retrofit2:retrofit:$retrofitLibVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitLibVersion"
+    testImplementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation "com.squareup.okhttp3:okhttp:$okHttpLibVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpLibVersion"
     implementation 'com.google.code.gson:gson:2.10.1'

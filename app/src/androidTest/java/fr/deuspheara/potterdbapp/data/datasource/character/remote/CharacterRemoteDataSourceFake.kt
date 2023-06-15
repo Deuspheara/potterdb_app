@@ -1,4 +1,4 @@
-package fr.deuspheara.potterdbapp.data.datasource.character
+package fr.deuspheara.potterdbapp.data.datasource.character.remote
 
 import androidx.paging.PagingSource
 import com.google.gson.Gson

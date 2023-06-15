@@ -1,4 +1,4 @@
-package fr.deuspheara.potterdbapp.data.datasource.character
+package fr.deuspheara.potterdbapp.data.datasource.character.remote
 
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest

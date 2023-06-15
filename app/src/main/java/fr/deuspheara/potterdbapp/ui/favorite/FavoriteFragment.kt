@@ -14,9 +14,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fr.deuspheara.potterdbapp.R
 import fr.deuspheara.potterdbapp.core.model.character.CharacterLightModel
+import fr.deuspheara.potterdbapp.core.model.character.CharacterTraits
 import fr.deuspheara.potterdbapp.databinding.FragmentFavoriteBinding
 import fr.deuspheara.potterdbapp.ui.characters.CharacterViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -38,7 +40,8 @@ class FavoriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val listView : ListView = binding.favoriteListView
+        val adapter = FavoriteAdapter()
+        binding.favoriteRecyclerView.layoutManager = LinearLayoutManager(context)
 
         viewLifecycleOwner.lifecycle.coroutineScope.launch{
             viewModel.favoriteState.collectLatest { state ->
@@ -48,45 +51,13 @@ class FavoriteFragment : Fragment() {
 
                 state.successModel.let {
                     Log.d("FavoriteFragment", it.toString())
-                    it?.let { favoriteList ->
-                        val adapter = FavoriteAdapter(requireContext(), favoriteList)
-                        listView.adapter = adapter
+                    val listFavorite = it?.filter { characterLightModel -> characterLightModel.isFavorite }
+                    listFavorite?.let { favoriteList ->
+                       binding.favoriteRecyclerView.adapter = adapter
+                        adapter.submitList(favoriteList.toCollection(ArrayList()))
                     }
                 }
             }
         }
-    }
-}
-
-class FavoriteAdapter(context: Context, favoriteList: List<CharacterLightModel>) : BaseAdapter() {
-    private val mContext: Context
-    private val favoriteList: List<CharacterLightModel>
-    override fun getCount(): Int {
-        return favoriteList.size
-    }
-
-    override fun getItem(position: Int): Any {
-        return favoriteList[position]
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getView(
-        position: Int,
-        convertView: View?,
-        parent: ViewGroup?
-    ): View {
-        val layoutInflater = LayoutInflater.from(mContext)
-        val rowMain = layoutInflater.inflate(R.layout.item_favorite, parent, false)
-        val nameTextView = rowMain.findViewById<TextView>(R.id.favoriteName)
-        nameTextView.text = favoriteList[position].name
-        return rowMain
-    }
-
-    init {
-        mContext = context
-        this.favoriteList = favoriteList
     }
 }

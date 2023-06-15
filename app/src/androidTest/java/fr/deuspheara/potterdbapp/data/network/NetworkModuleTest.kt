@@ -56,6 +56,7 @@ object NetworkModuleTest {
         ).client(okHttpClient).build()
     }
 
+
     @Provides
     fun providePotterApi(
         retrofit: Retrofit

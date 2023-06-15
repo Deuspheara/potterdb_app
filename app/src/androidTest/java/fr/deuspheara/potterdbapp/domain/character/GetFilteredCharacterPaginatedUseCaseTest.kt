@@ -6,6 +6,7 @@ import androidx.paging.map
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import fr.deuspheara.potterdbapp.TestingModelProvider
+import fr.deuspheara.potterdbapp.data.network.mapper.toCharacterLight
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.single
@@ -19,7 +20,6 @@ import javax.inject.Inject
 
 @HiltAndroidTest
 class GetFilteredCharacterPaginatedUseCaseTest {
-    private val mockWebServer = MockWebServer()
 
     @get:Rule
     val hiltAndroidRule = HiltAndroidRule(this)
@@ -34,7 +34,7 @@ class GetFilteredCharacterPaginatedUseCaseTest {
 
     @Test
     fun invoke() = runTest {
-        val expected = TestingModelProvider.provideCharacterTypeWithId("1")
+        val expected = TestingModelProvider.provideCharacterTypeWithId("1").toCharacterLight()
 
         val actual = getFilteredCharacterPaginatedUseCase("name", "Harry").take(1).first().map { actual ->
             assertEquals(expected, actual)

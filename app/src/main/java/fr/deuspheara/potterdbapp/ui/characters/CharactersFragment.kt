@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import fr.deuspheara.potterdbapp.core.model.character.CharacterLightModel
 import fr.deuspheara.potterdbapp.databinding.FragmentCharactersBinding
 import fr.deuspheara.potterdbapp.utils.NetworkHelper
 import kotlinx.coroutines.flow.collectLatest
@@ -27,6 +28,8 @@ class CharactersFragment : Fragment() {
     private lateinit var binding: FragmentCharactersBinding
     private val viewModel: CharacterViewModel by activityViewModels()
     private lateinit var pagingAdapter: CharacterPagingAdapter
+
+    var listFavorite : List<CharacterLightModel>? = listOf()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,11 +61,12 @@ class CharactersFragment : Fragment() {
                     binding.characterProgressBar.isVisible = true
                 }
 
-                state.successModel.let {
+                state.successModel.let { pagingDataFlow ->
                     binding.characterProgressBar.visibility = View.GONE
-                    it?.collectLatest { pagingCharacterData ->
+                    pagingDataFlow?.collectLatest { pagingCharacterData ->
                         pagingCharacterData.map {
                             Log.d("CharacterFragment", it.name.toString())
+                            it.isFavorite = listFavorite?.any { characterLightModel -> characterLightModel.slug == it.slug } ?: false
                         }
                         pagingAdapter.submitData(pagingCharacterData)
                     }
@@ -70,7 +74,6 @@ class CharactersFragment : Fragment() {
                 }
                 state.isInProgress.let {
                     binding.characterProgressBar.visibility = View.VISIBLE
-
                 }
 
             }
@@ -78,11 +81,23 @@ class CharactersFragment : Fragment() {
             viewModel.fetchFilteredCharacterPaginated(null, "name")
         }
 
+        viewLifecycleOwner.lifecycle.coroutineScope.launch{
+            viewModel.favoriteState.collectLatest { state ->
+                state.currentError?.let {
+                    Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+                }
+
+                state.successModel.let {
+                    Log.d("FavoriteFragment", it.toString())
+                    listFavorite = it?.filter { characterLightModel -> characterLightModel.isFavorite }
+                }
+            }
+        }
+
 
         binding.searchViewCharacter.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewLifecycleOwner.lifecycle.coroutineScope.launch{
-
                     viewModel.fetchFilteredCharacterPaginated("name", query)
                 }
                 return true

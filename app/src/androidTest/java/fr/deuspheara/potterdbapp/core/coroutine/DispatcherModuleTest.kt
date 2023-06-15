@@ -7,38 +7,59 @@ import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import fr.deuspheara.potterdbapp.data.network.NetworkModule
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.TestScope
 import javax.inject.Qualifier
+import javax.inject.Singleton
 
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
     replaces = [DispatcherModule::class]
 )
-object TestDispatcherModule {
+object DispatchersTestModule {
 
-    @Qualifier
-    @Retention(AnnotationRetention.RUNTIME)
-    annotation class TestDispatcherIO
-
-    @TestDispatcherIO
     @Provides
-    fun provideTestDispatcherIO(): CoroutineDispatcher = TestCoroutineDispatcher()
+    @Singleton
+    fun providesTestScope(): TestScope {
+        return TestScope()
+    }
 
-    @Qualifier
-    @Retention(AnnotationRetention.RUNTIME)
-    annotation class TestDispatcherMain
-
-    @TestDispatcherMain
     @Provides
-    fun provideTestDispatcherMain(): CoroutineDispatcher = TestCoroutineDispatcher()
+    @Singleton
+    fun provideTestDispatcher(
+        testScope: TestScope
+    ): TestDispatcher {
+        return StandardTestDispatcher(
+            scheduler = testScope.testScheduler,
+            name = "testing_dispatcher"
+        )
+    }
 
-    @Qualifier
-    @Retention(AnnotationRetention.RUNTIME)
-    annotation class TestDispatcherDefault
-
-    @TestDispatcherDefault
     @Provides
-    fun provideTestDispatcherDefault(): CoroutineDispatcher = TestCoroutineDispatcher()
+    @DispatcherModule.DispatcherIO
+    fun providesDispatcherIO(
+        testDispatcher: TestDispatcher
+    ): CoroutineDispatcher {
+        return testDispatcher
+    }
+
+    @Provides
+    @DispatcherModule.DispatcherDefault
+    fun providesDispatcherDefault(
+        testDispatcher: TestDispatcher
+    ): CoroutineDispatcher {
+        return testDispatcher
+    }
+
+    @Provides
+    @DispatcherModule.DispatcherMain
+    fun providesDispatcherMain(
+        testDispatcher: TestDispatcher
+    ): CoroutineDispatcher {
+        return testDispatcher
+    }
 
 }

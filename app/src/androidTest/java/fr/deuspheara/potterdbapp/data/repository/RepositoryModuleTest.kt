@@ -17,6 +17,5 @@ abstract class RepositoryModuleTest {
     @Binds
     abstract fun provideCharacterRepository(
         fake: CharacterRepositoryFake
-
     ) : CharacterRepository
 }

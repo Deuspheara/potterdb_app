@@ -7,8 +7,10 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.deuspheara.potterdbapp.core.model.character.CharacterLightModel
+import fr.deuspheara.potterdbapp.domain.character.GetFavoritesCharactersUseCase
 import fr.deuspheara.potterdbapp.domain.character.GetFilteredCharacterPaginatedUseCase
 import fr.deuspheara.potterdbapp.domain.character.ToggleFavoriteCharacterUseCase
+import fr.deuspheara.potterdbapp.ui.favorite.FavoriteState
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,7 +30,8 @@ data class ToggleFavoriteState(
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
     private val getFilteredCharacterPaginated: GetFilteredCharacterPaginatedUseCase,
-    val toggleFavoriteCharacter: ToggleFavoriteCharacterUseCase
+    val toggleFavoriteCharacter: ToggleFavoriteCharacterUseCase,
+    private val getFavoritesCharacters: GetFavoritesCharactersUseCase
 ) : ViewModel() {
 
     private val _characterState = MutableStateFlow(
@@ -46,11 +49,21 @@ class CharacterViewModel @Inject constructor(
         )
     )
 
+    private val _favoriteState = MutableStateFlow(
+        FavoriteState(
+            isInProgress = false,
+            currentError = null,
+            successModel = null
+        )
+    )
+
     val characterState: StateFlow<CharacterState> = _characterState.asStateFlow()
     val toggleFavoriteState: StateFlow<ToggleFavoriteState> = _toggleFavoriteState.asStateFlow()
+    val favoriteState: StateFlow<FavoriteState> = _favoriteState.asStateFlow()
 
     init {
         fetchFilteredCharacterPaginated(null, null)
+        fetchFavoritesCharacters()
     }
 
     fun fetchFilteredCharacterPaginated(
@@ -94,6 +107,23 @@ class CharacterViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    private fun fetchFavoritesCharacters() = viewModelScope.launch {
+        getFavoritesCharacters()
+            .catch { e ->
+                _favoriteState.value = _favoriteState.value.copy(
+                    isInProgress = false,
+                    currentError = e.message?.let { Exception(it) }
+                )
+            }
+            .collectLatest { exists ->
+                _favoriteState.value = FavoriteState(
+                    isInProgress = false,
+                    currentError = null,
+                    successModel =exists
+                )
+            }
 
     }
 }

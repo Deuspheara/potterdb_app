@@ -60,6 +60,7 @@ data class CharacterEntity (
                 born = characterEntity.born,
                 height = characterEntity.height,
                 weight = characterEntity.weight,
+                isFavorite = characterEntity.isFavorite
             )
         }
     }

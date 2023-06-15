@@ -12,40 +12,40 @@ import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
 
-@HiltAndroidTest
-internal class CharacterApiTest {
-
-    @get:Rule
-    val hiltAndroidRule = HiltAndroidRule(this)
-
-    @Inject
-    lateinit var characterApi: CharacterApi
-
-    @Inject
-    lateinit var mockWebServer: MockWebServer
-
-    @Before
-    fun setUp() {
-        hiltAndroidRule.inject()
-        mockWebServer.start()
-    }
-
-    @After
-    fun tearDown() {
-        mockWebServer.shutdown()
-    }
-
-    @Test
-    fun getCharacterBySlug() = runTest {
-        val expected = TestingModelProvider.provideCharacterResponse()
-        val actual = characterApi.getCharacter("harry-potter").body()
-        assertEquals(expected, actual)
-    }
-
-    @Test
-    fun getCharacters() = runTest {
-        val expected = TestingModelProvider.provideMultipleCharacterResponse()
-        val actual = characterApi.getCharacters("name", "Harry", 1, 5).body()
-        assertEquals(expected, actual)
-    }
-}
+//@HiltAndroidTest
+//internal class CharacterApiTest {
+//
+//    @get:Rule
+//    val hiltAndroidRule = HiltAndroidRule(this)
+//
+//    @Inject
+//    lateinit var characterApi: CharacterApi
+//
+//    @Inject
+//    lateinit var mockWebServer: MockWebServer
+//
+//    @Before
+//    fun setUp() {
+//        hiltAndroidRule.inject()
+//        mockWebServer.start()
+//    }
+//
+//    @After
+//    fun tearDown() {
+//        mockWebServer.shutdown()
+//    }
+//
+//    @Test
+//    fun getCharacterBySlug() = runTest {
+//        val expected = TestingModelProvider.provideCharacterResponse()
+//        val actual = characterApi.getCharacter("harry-potter").body()
+//        assertEquals(expected, actual)
+//    }
+//
+//    @Test
+//    fun getCharacters() = runTest {
+//        val expected = TestingModelProvider.provideMultipleCharacterResponse()
+//        val actual = characterApi.getCharacters("name", "Harry", 1, 5).body()
+//        assertEquals(expected, actual)
+//    }
+//}

@@ -1,5 +1,6 @@
 package fr.deuspheara.potterdbapp.ui.favorite
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onEach
@@ -25,7 +27,6 @@ data class FavoriteState(
 
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(
-    @DispatcherModule.DispatcherIO private val dispatcherIO: CoroutineDispatcher,
     private val getFavoritesCharacters: GetFavoritesCharactersUseCase
 ) : ViewModel() {
 
@@ -43,22 +44,21 @@ class FavoriteViewModel @Inject constructor(
         fetchFavoritesCharacters()
     }
 
-    private fun fetchFavoritesCharacters() {
-
-        viewModelScope.launch {
-            _favoriteState.value = _favoriteState.value.copy(isInProgress = true)
-            try {
+    private fun fetchFavoritesCharacters() = viewModelScope.launch {
+        getFavoritesCharacters()
+            .catch { e ->
+                _favoriteState.value = _favoriteState.value.copy(
+                    isInProgress = false,
+                    currentError = e.message?.let { Exception(it) }
+                )
+            }
+            .collectLatest { exists ->
                 _favoriteState.value = FavoriteState(
                     isInProgress = false,
                     currentError = null,
-                    successModel = getFavoritesCharacters().first()
-                )
-            } catch (e: Exception) {
-                _favoriteState.value = _favoriteState.value.copy(
-                    isInProgress = false,
-                    currentError = e
+                    successModel =exists
                 )
             }
-        }
+
     }
 }

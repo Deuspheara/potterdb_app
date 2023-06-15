@@ -21,9 +21,11 @@ class CharacterLightModel(
     val height: String?,
     @SerializedName("weight")
     val weight: String?,
+    @SerializedName("isFavorite")
+    var isFavorite: Boolean = false
 ){
 
-    var isFavorite: Boolean = false
+
     companion object {
         fun fromFullModel(fullModel: CharacterFullModel): CharacterLightModel {
             return CharacterLightModel(

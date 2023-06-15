@@ -7,6 +7,7 @@ import fr.deuspheara.potterdbapp.core.model.character.CharacterLightModel
 import fr.deuspheara.potterdbapp.data.paging.CharacterPagingSourceFake
 import fr.deuspheara.potterdbapp.data.repository.CharacterRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class CharacterRepositoryFake @Inject constructor() : CharacterRepository {
@@ -20,14 +21,27 @@ class CharacterRepositoryFake @Inject constructor() : CharacterRepository {
     ): Flow<PagingData<CharacterLightModel>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 20,
+                pageSize = 1,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = { CharacterPagingSourceFake() }
         ).flow.toCharacterLight()
     }
 
-    override suspend fun toggleFavoriteStatus(slug: String) {
-        TODO("Not yet implemented")
+    override suspend fun toggleFavoriteCharacter(
+        slug: String,
+        characterLightModel: CharacterLightModel
+    ): Boolean {
+        return true
     }
+
+    override suspend fun getFavoriteCharacters(): Flow<List<CharacterLightModel>> {
+        return flowOf(
+            listOf(
+                TestingModelProvider.provideCharacterTypeWithId("").toCharacterLight(),
+                TestingModelProvider.provideCharacterTypeWithId("").toCharacterLight(),
+            )
+        )
+    }
+
 }

@@ -1,5 +1,7 @@
 package fr.deuspheara.potterdbapp
 
+import fr.deuspheara.potterdbapp.core.model.character.CharacterLightModel
+import fr.deuspheara.potterdbapp.data.database.model.CharacterEntity
 import fr.deuspheara.potterdbapp.data.network.mapper.toCharacterLight
 import fr.deuspheara.potterdbapp.data.network.model.*
 
@@ -102,6 +104,37 @@ object TestingModelProvider {
             last = 0,
             records = 0
         )
+    }
+
+    fun provideCharacterEntity() : CharacterEntity{
+        return CharacterEntity(
+            slug = "harry-potter",
+            isFavorite= false,
+            name = "Harry Potter",
+            image= "https://example.com",
+            species= "Human",
+            gender= "Male",
+            house= "Griffindor",
+            born= "",
+            height= "",
+            weight= ""
+        )
+    }
+
+    fun provideCharacterLightModel() : CharacterLightModel{
+        return CharacterLightModel(
+            slug = "harry-potter",
+            name = "Harry Potter",
+            image = "image_url_here",
+            species = "human",
+            gender = "male",
+            house = "Gryffindor",
+            born = "July 31, 1980",
+            height = "5 feet 10 inches",
+            weight = "160 lbs",
+            isFavorite = false
+        )
+
     }
 
 

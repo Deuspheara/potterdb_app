@@ -107,7 +107,8 @@ class CharacterRepositoryImpl @Inject constructor(
                 Log.d(TAG, "Toggle favorite character with id: $slug")
                 val character = characterLocalDataSource.getCharacterBySlug(slug)
                 if (character != null) {
-                    characterLocalDataSource.toggleFavoriteStatus(slug, character.isFavorite)
+                    characterLocalDataSource.toggleFavoriteStatus(slug, !character.isFavorite)
+                    Log.d("CharacterRepository", "Character with id $slug is now ${!character.isFavorite}")
                 } else {
                     val characterEntity = CharacterEntity(
                         slug = characterLightModel.slug ?: "",
