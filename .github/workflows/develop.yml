@@ -2,8 +2,9 @@ name: Build/Test and Distribute to Firebase App Distribution
 
 on:
   pull_request:
+    types: [opened, reopened]
     branches:
-      - develop
+      - dev
 
 jobs:
   build-and-test:
